@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/hp/vibeQuoutes/src/app/search/loading.tsx"],"sourcesContent":["import { QuoteListSkeleton } from \"@/components/ui/Skeleton\";\r\n\r\nexport default function SearchLoading() {\r\n  return (\r\n    <div className=\"max-w-4xl mx-auto px-4 py-8 sm:py-12\">\r\n      {/* Search Header Skeleton */}\r\n      <div className=\"text-center mb-8\">\r\n        <div className=\"h-10 w-64 bg-gray-200 dark:bg-gray-700 rounded-lg mx-auto mb-4 animate-pulse\" />\r\n        <div className=\"h-5 w-80 max-w-full bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-6 animate-pulse\" />\r\n        <div className=\"h-14 max-w-2xl mx-auto bg-gray-200 dark:bg-gray-700 rounded-2xl animate-pulse\" />\r\n      </div>\r\n\r\n      {/* Results Skeleton */}\r\n      <QuoteListSkeleton count={5} />\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;;AAEe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;;0BAEb,8OAAC;gBAAI,WAAU;;kCACb,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC;wBAAI,WAAU;;;;;;;;;;;;0BAIjB,8OAAC,yJAAiB;gBAAC,OAAO;;;;;;;;;;;;AAGhC"}}]
-}
