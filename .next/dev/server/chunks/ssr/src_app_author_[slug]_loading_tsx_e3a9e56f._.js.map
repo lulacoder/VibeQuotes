@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/hp/vibeQuoutes/src/app/author/%5Bslug%5D/loading.tsx"],"sourcesContent":["import { AuthorCardSkeleton, QuoteListSkeleton } from \"@/components/ui/Skeleton\";\r\n\r\nexport default function AuthorLoading() {\r\n  return (\r\n    <div className=\"max-w-4xl mx-auto px-4 py-8 sm:py-12\">\r\n      {/* Back Link Skeleton */}\r\n      <div className=\"h-5 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-pulse\" />\r\n      \r\n      {/* Author Card Skeleton */}\r\n      <AuthorCardSkeleton />\r\n      \r\n      {/* Quotes Section */}\r\n      <div className=\"mt-12\">\r\n        <div className=\"h-7 w-48 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-pulse\" />\r\n        <QuoteListSkeleton count={3} />\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;;AAEe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;;0BAEb,8OAAC;gBAAI,WAAU;;;;;;0BAGf,8OAAC,0JAAkB;;;;;0BAGnB,8OAAC;gBAAI,WAAU;;kCACb,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC,yJAAiB;wBAAC,OAAO;;;;;;;;;;;;;;;;;;AAIlC"}}]
+}
