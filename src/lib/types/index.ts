@@ -1,3 +1,8 @@
+// Quote Source Types
+export type QuoteSource = "quotable" | "local";
+export type QuoteEra = "modern" | "classic";
+export type AuthorCategory = "entrepreneur" | "philosopher" | "athlete" | "artist" | "scientist" | "leader";
+
 // Quotable API Types
 export interface Quote {
   _id: string;
@@ -8,6 +13,31 @@ export interface Quote {
   tags: string[];
   dateAdded?: string;
   dateModified?: string;
+  source?: QuoteSource;
+  era?: QuoteEra;
+  category?: AuthorCategory;
+}
+
+// Modern Quote Type (for local quotes)
+export interface ModernQuote {
+  id: string;
+  content: string;
+  author: string;
+  authorSlug: string;
+  category: AuthorCategory;
+  era: QuoteEra;
+  tags: string[];
+  source: string;
+  length?: number;
+}
+
+// Modern Author Info
+export interface ModernAuthor {
+  name: string;
+  slug: string;
+  category: AuthorCategory;
+  bio: string;
+  era: QuoteEra;
 }
 
 export interface Author {
