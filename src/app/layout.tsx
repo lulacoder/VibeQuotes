@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { QuotesProvider } from "@/context/QuotesContext";
 import { ToastProvider } from "@/context/ToastContext";
@@ -11,29 +10,15 @@ import { Footer } from "@/components/layout/Footer";
 import { ToastContainer } from "@/components/ui/ToastContainer";
 import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "VibeQuotes — Discover Wisdom",
   description:
-    "A cinematic quote discovery experience. Explore timeless wisdom from the world's greatest minds. Save favorites, build collections, and find daily inspiration.",
+    "A tech-powered quote discovery experience. Explore wisdom from the world's greatest minds.",
   keywords: ["quotes", "inspiration", "wisdom", "motivation", "daily quotes", "philosophy", "entrepreneurs"],
   authors: [{ name: "VibeQuotes" }],
   openGraph: {
     title: "VibeQuotes — Discover Wisdom",
-    description: "A cinematic quote discovery experience.",
+    description: "A tech-powered quote discovery experience.",
     type: "website",
   },
   icons: {
@@ -48,16 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${playfair.variable} ${inter.variable} antialiased min-h-screen flex flex-col`}
-      >
+      <body className="antialiased min-h-screen flex flex-col">
         <ThemeProvider>
           <QueryProvider>
             <ToastProvider>
               <QuotesProvider>
                 <CollectionsProvider>
                   <MinimalHeader />
-                  <main className="flex-1 relative z-10">{children}</main>
+                  <main className="flex-1">{children}</main>
                   <Footer />
                   <ToastContainer />
                   <KeyboardShortcuts />

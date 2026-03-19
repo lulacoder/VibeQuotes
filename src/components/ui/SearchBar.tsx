@@ -8,6 +8,8 @@ import { Search, X, Sparkles, ArrowRight } from "lucide-react";
 interface SearchBarProps {
   placeholder?: string;
   autoFocus?: boolean;
+  defaultValue?: string;
+  onSearch?: (query: string) => void;
 }
 
 const SEARCH_SUGGESTIONS = [
@@ -24,10 +26,12 @@ const SEARCH_SUGGESTIONS = [
 export function SearchBar({
   placeholder = "Search quotes or authors...",
   autoFocus = false,
+  defaultValue = "",
+  onSearch,
 }: SearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("q") || "");
+  const [query, setQuery] = useState(defaultValue || searchParams.get("q") || "");
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +62,7 @@ export function SearchBar({
       }
 
       debounceRef.current = setTimeout(() => {
+        onSearch?.(value);
         const params = new URLSearchParams(searchParams.toString());
         if (value.trim()) {
           params.set("q", value.trim());
@@ -68,7 +73,7 @@ export function SearchBar({
         router.push(`/search?${params.toString()}`);
       }, 400);
     },
-    [router, searchParams]
+    [router, searchParams, onSearch]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +84,7 @@ export function SearchBar({
 
   const handleClear = () => {
     setQuery("");
+    onSearch?.("");
     router.push("/search");
     inputRef.current?.focus();
   };
@@ -92,6 +98,7 @@ export function SearchBar({
     if (query.trim()) {
       params.set("q", query.trim());
     }
+    onSearch?.(query);
     router.push(`/search?${params.toString()}`);
     setShowSuggestions(false);
   };

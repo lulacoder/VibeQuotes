@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import { AuthorCategory } from "@/lib/types";
 import { AUTHOR_CATEGORIES } from "@/lib/api/quotes";
@@ -12,37 +11,37 @@ interface CategoryFilterProps {
 
 export function CategoryFilter({ selectedCategory, onCategorySelect }: CategoryFilterProps) {
   return (
-    <div className="w-full overflow-x-auto -mx-6 px-6">
-      <div className="flex gap-2 pb-2 min-w-max">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onCategorySelect(null)}
-          className={`px-4 py-2 rounded-sm text-xs font-medium transition-all whitespace-nowrap ${
-            selectedCategory === null
-              ? "bg-terracotta-500 text-white"
-              : "filter-chip"
-          }`}
+    <div className="flex flex-wrap gap-2">
+      <FilterPill active={selectedCategory === null} onClick={() => onCategorySelect(null)}>
+        All
+      </FilterPill>
+      {AUTHOR_CATEGORIES.map((category) => (
+        <FilterPill
+          key={category.value}
+          active={selectedCategory === category.value}
+          onClick={() => onCategorySelect(selectedCategory === category.value ? null : category.value)}
         >
-          All
-        </motion.button>
-        {AUTHOR_CATEGORIES.map((cat) => (
-          <motion.button
-            key={cat.value}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onCategorySelect(selectedCategory === cat.value ? null : cat.value)}
-            className={`px-4 py-2 rounded-sm text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              selectedCategory === cat.value
-                ? "bg-terracotta-500 text-white"
-                : "filter-chip"
-            }`}
-          >
-            <span className="text-sm">{cat.icon}</span>
-            <span>{cat.label}</span>
-          </motion.button>
-        ))}
-      </div>
+          <span>{category.icon}</span>
+          <span>{category.label}</span>
+        </FilterPill>
+      ))}
     </div>
+  );
+}
+
+function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <motion.button
+      whileHover={{ y: -1 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors ${
+        active
+          ? "bg-[var(--color-accent-primary)] text-black"
+          : "border border-white/10 bg-white/[0.04] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+      }`}
+    >
+      {children}
+    </motion.button>
   );
 }

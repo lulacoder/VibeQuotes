@@ -63,7 +63,7 @@ export function LikeButton({ isLiked, isDisliked, onLike, onDislike }: LikeButto
             ? "bg-terracotta-500/10 text-terracotta-600 dark:text-terracotta-400"
             : "text-ink-400 hover:text-terracotta-500 hover:bg-terracotta-500/10 dark:text-parchment-500 dark:hover:text-terracotta-400"
         }`}
-        aria-label="Like quote"
+        aria-label="Add to favorites"
       >
         <AnimatePresence>
           {showParticles && (

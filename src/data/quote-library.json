@@ -1,0 +1,286 @@
+{
+  "authors": [
+    {
+      "name": "Albert Einstein",
+      "slug": "albert-einstein",
+      "category": "scientist",
+      "bio": "Physicist whose work changed how we understand time, space, and imagination."
+    },
+    {
+      "name": "Maya Angelou",
+      "slug": "maya-angelou",
+      "category": "artist",
+      "bio": "Poet, memoirist, and speaker whose words carried courage and grace."
+    },
+    {
+      "name": "Marcus Aurelius",
+      "slug": "marcus-aurelius",
+      "category": "philosopher",
+      "bio": "Roman emperor whose private reflections became a public handbook for resilience."
+    },
+    {
+      "name": "Frida Kahlo",
+      "slug": "frida-kahlo",
+      "category": "artist",
+      "bio": "Painter whose self-portraits turned pain, identity, and defiance into art."
+    },
+    {
+      "name": "Nelson Mandela",
+      "slug": "nelson-mandela",
+      "category": "leader",
+      "bio": "Freedom fighter and statesman who transformed struggle into reconciliation."
+    }
+  ],
+  "quotes": [
+    {
+      "id": "einstein-001",
+      "content": "Imagination is more important than knowledge.",
+      "author": "Albert Einstein",
+      "authorSlug": "albert-einstein",
+      "category": "scientist",
+      "era": "classic",
+      "tags": ["imagination", "knowledge", "creativity"],
+      "source": "essay"
+    },
+    {
+      "id": "einstein-002",
+      "content": "In the middle of difficulty lies opportunity.",
+      "author": "Albert Einstein",
+      "authorSlug": "albert-einstein",
+      "category": "scientist",
+      "era": "classic",
+      "tags": ["challenge", "opportunity", "resilience"],
+      "source": "interview"
+    },
+    {
+      "id": "einstein-003",
+      "content": "Life is like riding a bicycle. To keep your balance, you must keep moving.",
+      "author": "Albert Einstein",
+      "authorSlug": "albert-einstein",
+      "category": "scientist",
+      "era": "classic",
+      "tags": ["movement", "balance", "progress"],
+      "source": "letter"
+    },
+    {
+      "id": "einstein-004",
+      "content": "Try not to become a person of success, but rather a person of value.",
+      "author": "Albert Einstein",
+      "authorSlug": "albert-einstein",
+      "category": "scientist",
+      "era": "classic",
+      "tags": ["value", "character", "success"],
+      "source": "essay"
+    },
+    {
+      "id": "einstein-005",
+      "content": "A calm and modest life brings more happiness than the pursuit of success combined with constant restlessness.",
+      "author": "Albert Einstein",
+      "authorSlug": "albert-einstein",
+      "category": "scientist",
+      "era": "classic",
+      "tags": ["happiness", "simplicity", "restraint"],
+      "source": "letter"
+    },
+    {
+      "id": "angelou-001",
+      "content": "You may not control all the events that happen to you, but you can decide not to be reduced by them.",
+      "author": "Maya Angelou",
+      "authorSlug": "maya-angelou",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["agency", "resilience", "courage"],
+      "source": "interview"
+    },
+    {
+      "id": "angelou-002",
+      "content": "If you are always trying to be normal, you will never know how amazing you can be.",
+      "author": "Maya Angelou",
+      "authorSlug": "maya-angelou",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["identity", "confidence", "self-worth"],
+      "source": "speech"
+    },
+    {
+      "id": "angelou-003",
+      "content": "Nothing will work unless you do.",
+      "author": "Maya Angelou",
+      "authorSlug": "maya-angelou",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["work", "action", "discipline"],
+      "source": "speech"
+    },
+    {
+      "id": "angelou-004",
+      "content": "We may encounter many defeats but we must not be defeated.",
+      "author": "Maya Angelou",
+      "authorSlug": "maya-angelou",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["defeat", "endurance", "hope"],
+      "source": "poem"
+    },
+    {
+      "id": "angelou-005",
+      "content": "When you know better, do better.",
+      "author": "Maya Angelou",
+      "authorSlug": "maya-angelou",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["growth", "learning", "integrity"],
+      "source": "interview"
+    },
+    {
+      "id": "aurelius-001",
+      "content": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+      "author": "Marcus Aurelius",
+      "authorSlug": "marcus-aurelius",
+      "category": "philosopher",
+      "era": "classic",
+      "tags": ["mindset", "strength", "stoicism"],
+      "source": "Meditations"
+    },
+    {
+      "id": "aurelius-002",
+      "content": "The happiness of your life depends upon the quality of your thoughts.",
+      "author": "Marcus Aurelius",
+      "authorSlug": "marcus-aurelius",
+      "category": "philosopher",
+      "era": "classic",
+      "tags": ["thoughts", "happiness", "discipline"],
+      "source": "Meditations"
+    },
+    {
+      "id": "aurelius-003",
+      "content": "Waste no more time arguing what a good man should be. Be one.",
+      "author": "Marcus Aurelius",
+      "authorSlug": "marcus-aurelius",
+      "category": "philosopher",
+      "era": "classic",
+      "tags": ["virtue", "action", "character"],
+      "source": "Meditations"
+    },
+    {
+      "id": "aurelius-004",
+      "content": "The impediment to action advances action. What stands in the way becomes the way.",
+      "author": "Marcus Aurelius",
+      "authorSlug": "marcus-aurelius",
+      "category": "philosopher",
+      "era": "classic",
+      "tags": ["obstacle", "action", "resilience"],
+      "source": "Meditations"
+    },
+    {
+      "id": "aurelius-005",
+      "content": "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.",
+      "author": "Marcus Aurelius",
+      "authorSlug": "marcus-aurelius",
+      "category": "philosopher",
+      "era": "classic",
+      "tags": ["simplicity", "peace", "mindset"],
+      "source": "Meditations"
+    },
+    {
+      "id": "kahlo-001",
+      "content": "At the end of the day, we can endure much more than we think we can.",
+      "author": "Frida Kahlo",
+      "authorSlug": "frida-kahlo",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["endurance", "pain", "strength"],
+      "source": "journal"
+    },
+    {
+      "id": "kahlo-002",
+      "content": "I paint my own reality. The only thing I know is that I paint because I need to.",
+      "author": "Frida Kahlo",
+      "authorSlug": "frida-kahlo",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["art", "identity", "truth"],
+      "source": "journal"
+    },
+    {
+      "id": "kahlo-003",
+      "content": "Feet, what do I need you for when I have wings to fly?",
+      "author": "Frida Kahlo",
+      "authorSlug": "frida-kahlo",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["freedom", "vision", "art"],
+      "source": "journal"
+    },
+    {
+      "id": "kahlo-004",
+      "content": "I never paint dreams or nightmares. I paint my own reality.",
+      "author": "Frida Kahlo",
+      "authorSlug": "frida-kahlo",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["reality", "painting", "honesty"],
+      "source": "journal"
+    },
+    {
+      "id": "kahlo-005",
+      "content": "Pain, pleasure, and death are no more than a process for existence.",
+      "author": "Frida Kahlo",
+      "authorSlug": "frida-kahlo",
+      "category": "artist",
+      "era": "classic",
+      "tags": ["existence", "pain", "life"],
+      "source": "journal"
+    },
+    {
+      "id": "mandela-001",
+      "content": "It always seems impossible until it is done.",
+      "author": "Nelson Mandela",
+      "authorSlug": "nelson-mandela",
+      "category": "leader",
+      "era": "classic",
+      "tags": ["impossible", "hope", "progress"],
+      "source": "speech"
+    },
+    {
+      "id": "mandela-002",
+      "content": "I learned that courage was not the absence of fear, but the triumph over it.",
+      "author": "Nelson Mandela",
+      "authorSlug": "nelson-mandela",
+      "category": "leader",
+      "era": "classic",
+      "tags": ["courage", "fear", "leadership"],
+      "source": "Long Walk to Freedom"
+    },
+    {
+      "id": "mandela-003",
+      "content": "A winner is a dreamer who never gives up.",
+      "author": "Nelson Mandela",
+      "authorSlug": "nelson-mandela",
+      "category": "leader",
+      "era": "classic",
+      "tags": ["dreams", "perseverance", "victory"],
+      "source": "speech"
+    },
+    {
+      "id": "mandela-004",
+      "content": "Do not judge me by my successes, judge me by how many times I fell down and got back up again.",
+      "author": "Nelson Mandela",
+      "authorSlug": "nelson-mandela",
+      "category": "leader",
+      "era": "classic",
+      "tags": ["failure", "resilience", "character"],
+      "source": "speech"
+    },
+    {
+      "id": "mandela-005",
+      "content": "Education is the most powerful weapon which you can use to change the world.",
+      "author": "Nelson Mandela",
+      "authorSlug": "nelson-mandela",
+      "category": "leader",
+      "era": "classic",
+      "tags": ["education", "change", "impact"],
+      "source": "speech"
+    }
+  ]
+}

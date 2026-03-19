@@ -1,330 +1,133 @@
 "use client";
 
-import React, { useEffect, useState, Suspense, useCallback } from "react";
+import React, { useMemo, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Quote, PaginatedQuotes, AuthorCategory, QuoteEra } from "@/lib/types";
-import { searchUnifiedQuotes, getAllModernAuthors } from "@/lib/api/quotes";
-import { POPULAR_AUTHORS } from "@/lib/api/quotable";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertCircle, ChevronDown, Search, Sparkles } from "lucide-react";
+import { AUTHOR_CATEGORIES, getAllAuthors, searchUnifiedQuotes } from "@/lib/api/quotes";
+import type { AuthorCategory, QuoteEra, Quote } from "@/lib/types";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { CategoryFilter } from "@/components/ui/CategoryFilter";
 import { EraFilter } from "@/components/ui/EraFilter";
 import { QuoteCard } from "@/components/ui/QuoteCard";
-import { QuoteListSkeleton } from "@/components/ui/Skeleton";
-import Link from "next/link";
-import {
-  Search,
-  AlertCircle,
-  Users,
-  Sparkles,
-  Tag,
-  ChevronDown,
-  RefreshCw
-} from "lucide-react";
-
-const RESULTS_PER_PAGE = 10;
+import { Footer } from "@/components/layout/Footer";
 
 function SearchContent() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("q") || "";
-
   const [results, setResults] = useState<Quote[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<AuthorCategory | null>(null);
   const [selectedEra, setSelectedEra] = useState<QuoteEra | "all">("all");
-  const [hasMore, setHasMore] = useState(true);
+  const query = searchParams.get("q") ?? "";
 
-  const modernAuthors = getAllModernAuthors();
-  const hasSearch = query.length > 0;
+  const authors = useMemo(() => getAllAuthors(), []);
 
-  const searchQuotes = useCallback(async (page: number = 1, append: boolean = false) => {
-    if (!hasSearch) return;
+  React.useEffect(() => {
+    setLoading(false);
+  }, []);
 
-    try {
-      if (append) {
-        setLoadingMore(true);
-      } else {
-        setLoading(true);
+  React.useEffect(() => {
+    const run = async () => {
+      if (!query.trim()) {
+        setResults([]);
         setError(null);
+        return;
       }
 
-      const data = await searchUnifiedQuotes(
-        query,
-        selectedEra,
-        selectedCategory || undefined,
-        page,
-        RESULTS_PER_PAGE
-      );
-
-      if (append) {
-        setResults((prev) => {
-          const combined = [...prev, ...data.results];
-          const unique = combined.filter((q, idx, arr) => arr.findIndex((x) => x._id === q._id) === idx);
-          return unique;
-        });
-      } else {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await searchUnifiedQuotes(query, selectedEra, selectedCategory ?? undefined, 1, 24);
         setResults(data.results);
-        setTotalCount(data.totalCount);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Search failed");
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setCurrentPage(page);
-      setHasMore(page < data.totalPages);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to search.");
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  }, [query, selectedEra, selectedCategory, hasSearch]);
-
-  useEffect(() => {
-    if (hasSearch) {
-      setResults([]);
-      setCurrentPage(1);
-      searchQuotes(1, false);
-    }
+    run();
   }, [query, selectedCategory, selectedEra]);
 
-  const handleLoadMore = () => {
-    searchQuotes(currentPage + 1, true);
-  };
-
   return (
-    <div className="relative min-h-screen">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", delay: 0.1 }}
-            className="inline-flex items-center justify-center w-14 h-14 mb-4 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 shadow-lg shadow-primary-500/20"
-          >
-            <Search className="w-6 h-6 text-white" />
-          </motion.div>
-
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-            <span className="gradient-text">Search Quotes</span>
-          </h1>
-
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
-            Find wisdom from entrepreneurs, philosophers, and great minds
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#171321_0%,#09090d_55%,#050507_100%)] px-5 pt-28 text-[var(--color-text-primary)] lg:px-10">
+      <div className="mx-auto max-w-7xl">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-10 max-w-3xl">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[var(--color-text-muted)]">
+            <Search className="h-3.5 w-3.5 text-[var(--color-accent-primary)]" />
+            Search archive
+          </div>
+          <h1 className="text-4xl font-black tracking-[-0.05em] sm:text-6xl">Find quotes by word, mood, or author.</h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--color-text-secondary)]">
+            The entire collection is local, indexed, and ready offline. Filter by era and category without waiting on a network call.
           </p>
-
-          <SearchBar autoFocus={!hasSearch} />
-
-          {(hasSearch || !loading) && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mt-4 space-y-3"
-            >
-              <EraFilter selectedEra={selectedEra} onEraSelect={setSelectedEra} />
-              <CategoryFilter selectedCategory={selectedCategory} onCategorySelect={setSelectedCategory} />
-            </motion.div>
-          )}
         </motion.div>
 
-        {hasSearch && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-4"
-          >
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {loading ? "Searching..." : `${totalCount} result${totalCount !== 1 ? "s" : ""} for "${query}"`}
-            </p>
-          </motion.div>
-        )}
+        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_30px_100px_rgba(0,0,0,0.3)] backdrop-blur-2xl sm:p-6">
+          <SearchBar placeholder="Search quotes or authors..." autoFocus={false} defaultValue={query} />
+
+          <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <EraFilter selectedEra={selectedEra} onEraSelect={setSelectedEra} />
+            <CategoryFilter selectedCategory={selectedCategory} onCategorySelect={setSelectedCategory} />
+          </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
+          <p>{query ? `${results.length} results for “${query}”` : "Start typing to search the archive."}</p>
+          <p className="uppercase tracking-[0.22em] text-[var(--color-text-muted)]">{authors.length} authors indexed</p>
+        </div>
 
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-12"
-          >
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-              <AlertCircle className="w-6 h-6 text-red-500" />
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">{error}</p>
-          </motion.div>
+          <div className="mt-6 flex items-center gap-3 rounded-2xl border border-[rgba(255,99,99,0.2)] bg-[rgba(255,99,99,0.08)] px-4 py-3 text-sm text-[#ffb1b1]">
+            <AlertCircle className="h-4 w-4" />
+            {error}
+          </div>
         )}
 
-        {loading && <QuoteListSkeleton count={3} />}
+        {loading && <p className="mt-8 text-sm text-[var(--color-text-muted)]">Searching the shelves...</p>}
 
         {!loading && results.length > 0 && (
-          <div className="space-y-4">
-            <AnimatePresence mode="popLayout">
-              {results.map((quote, index) => (
-                <motion.div
-                  key={quote._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ delay: index * 0.03 }}
-                >
+          <div className="mt-8 grid gap-4">
+            <AnimatePresence>
+              {results.map((quote) => (
+                <motion.div key={quote._id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                   <QuoteCard quote={quote} showFullMeta={false} />
                 </motion.div>
               ))}
             </AnimatePresence>
-
-            {hasMore && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="pt-4 text-center"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleLoadMore}
-                  disabled={loadingMore}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-card text-sm font-medium text-gray-700 dark:text-gray-300 hover:shadow-lg transition-all disabled:opacity-50"
-                >
-                  {loadingMore ? (
-                    <>
-                      <RefreshCw className="w-4 h-4 animate-spin" />
-                      Loading...
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="w-4 h-4" />
-                      Load More
-                    </>
-                  )}
-                </motion.button>
-              </motion.div>
-            )}
           </div>
         )}
 
-        {!loading && hasSearch && results.length === 0 && !error && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-12"
-          >
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <span className="text-2xl">🔍</span>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-              No quotes found
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
-              Try different keywords or adjust your filters
-            </p>
-          </motion.div>
+        {!loading && query && results.length === 0 && !error && (
+          <div className="mt-10 rounded-[2rem] border border-dashed border-white/10 bg-black/20 p-10 text-center">
+            <Sparkles className="mx-auto mb-4 h-6 w-6 text-[var(--color-accent-primary)]" />
+            <h2 className="text-xl font-bold">No match found</h2>
+            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">Try a broader word or remove one of the filters.</p>
+          </div>
         )}
 
-        {!hasSearch && !loading && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-4">
-            <div className="mb-8">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="p-1.5 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500">
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
-                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Modern Voices
-                </h2>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-600 dark:text-primary-400">
-                  New
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {modernAuthors.slice(0, 6).map((author, index) => (
-                  <motion.div
-                    key={author.slug}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link
-                      href={`/author/${author.slug}`}
-                      className="block p-3 glass-card rounded-xl hover:shadow-md transition-all text-center group"
-                    >
-                      <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center text-sm font-bold text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform">
-                        {author.name.charAt(0)}
-                      </div>
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300 block truncate">
-                        {author.name}
-                      </span>
-                      <span className="text-[10px] text-gray-400 capitalize">{author.category}</span>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="p-1.5 rounded-lg bg-gradient-to-br from-gray-500 to-gray-600">
-                  <Users className="w-4 h-4 text-white" />
-                </div>
-                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Classic Authors
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {POPULAR_AUTHORS.slice(0, 4).map((author, index) => (
-                  <motion.div
-                    key={author.slug}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                  >
-                    <Link
-                      href={`/author/${author.slug}`}
-                      className="block p-3 glass-card rounded-xl hover:shadow-md transition-all text-center group"
-                    >
-                      <div className="w-9 h-9 mx-auto mb-2 rounded-full bg-gradient-to-br from-gray-400/20 to-gray-500/20 flex items-center justify-center text-sm font-bold text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform">
-                        {author.name.charAt(0)}
-                      </div>
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300 block truncate">
-                        {author.name}
-                      </span>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 glass-card rounded-2xl p-5">
-              <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-                <Tag className="w-4 h-4 text-primary-500" />
-                Search Tips
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-3 text-xs text-gray-600 dark:text-gray-400">
-                <p>• Search by keyword: "success", "love", "wisdom"</p>
-                <p>• Search by author: "Hormozi", "Musk", "Naval"</p>
-                <p>• Use filters to narrow by era or category</p>
-                <p>• Click tags on quotes to find similar ones</p>
-              </div>
-            </div>
-          </motion.div>
+        {!query && (
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {authors.slice(0, 6).map((author) => (
+              <Link key={author.slug} href={`/author/${author.slug}`} className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5 transition-transform hover:-translate-y-1">
+                <p className="text-xs uppercase tracking-[0.24em] text-[var(--color-text-muted)]">{author.category}</p>
+                <h2 className="mt-2 text-lg font-bold">{author.name}</h2>
+                <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{author.bio}</p>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
-    </div>
+      <Footer />
+    </main>
   );
 }
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<QuoteListSkeleton count={3} />}>
+    <Suspense fallback={<div className="min-h-screen" />}>
       <SearchContent />
     </Suspense>
   );

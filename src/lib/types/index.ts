@@ -1,5 +1,5 @@
 // Quote Source Types
-export type QuoteSource = "quotable" | "local";
+export type QuoteSource = "local";
 export type QuoteEra = "modern" | "classic";
 export type AuthorCategory = "entrepreneur" | "philosopher" | "athlete" | "artist" | "scientist" | "leader";
 
