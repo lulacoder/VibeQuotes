@@ -6,94 +6,63 @@ import { Home, Search, Sparkles, MapPin } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      {/* Background decoration */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl" />
-      </div>
-
+    <div className="flex min-h-screen items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        className="text-center max-w-lg"
+        className="max-w-lg text-center"
       >
-        {/* 404 Number */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", delay: 0.1, bounce: 0.4 }}
           className="relative mb-8"
         >
-          <span className="text-[150px] md:text-[200px] font-bold gradient-text leading-none">
+          <span className="text-[120px] font-semibold leading-none text-[var(--color-text-primary)] md:text-[180px]">
             404
           </span>
 
-          {/* Floating icon */}
-          <motion.div
-            animate={{
-              y: [0, -10, 0],
-              rotate: [0, 5, -5, 0]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          >
-            <div className="p-4 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 shadow-lg shadow-primary-500/30">
-              <MapPin className="w-8 h-8 text-white" />
-            </div>
-          </motion.div>
+          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3 text-[var(--color-accent-primary)]">
+            <MapPin className="h-6 w-6" />
+          </div>
         </motion.div>
 
-        {/* Glass Card Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="glass-card rounded-3xl p-8"
+          className="rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-8"
         >
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+          <h1 className="mb-3 text-2xl font-semibold text-[var(--color-text-primary)]">
             Page not found
           </h1>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Looks like this page wandered off in search of wisdom.
-            Let&apos;s get you back on track!
+          <p className="mb-8 text-[var(--color-text-secondary)]">
+            Looks like this page wandered off.
           </p>
 
-          {/* Quote decoration */}
-          <div className="mb-8 p-4 rounded-2xl bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 border border-primary-100 dark:border-primary-800/30">
-            <p className="text-sm italic text-gray-700 dark:text-gray-300">
+          <div className="mb-8 rounded-[12px] border border-[var(--color-border)] p-4 text-left text-sm text-[var(--color-text-secondary)]">
+            <p>
               &ldquo;Not all those who wander are lost.&rdquo;
             </p>
-            <p className="text-xs text-gray-500 mt-1">— J.R.R. Tolkien</p>
+            <p className="mt-1 text-xs text-[var(--color-text-muted)]">— J.R.R. Tolkien</p>
           </div>
 
-          {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div>
               <Link
                 href="/"
-                className="btn-primary inline-flex items-center justify-center gap-2 w-full sm:w-auto"
+                className="ui-button ui-button-primary w-full sm:w-auto"
               >
                 <Home className="w-4 h-4" />
                 Go Home
               </Link>
             </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div>
               <Link
                 href="/search"
-                className="btn-secondary inline-flex items-center justify-center gap-2 w-full sm:w-auto"
+                className="ui-button ui-button-secondary w-full sm:w-auto"
               >
                 <Search className="w-4 h-4" />
                 Search Quotes
@@ -102,12 +71,11 @@ export default function NotFound() {
           </div>
         </motion.div>
 
-        {/* Easter egg */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-6 text-xs text-gray-400 dark:text-gray-600 flex items-center justify-center gap-1"
+          className="mt-6 flex items-center justify-center gap-1 text-xs text-[var(--color-text-muted)]"
         >
           <Sparkles className="w-3 h-3" />
           Press <kbd className="mx-1">/</kbd> to search

@@ -33,19 +33,19 @@ export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, feat
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: animationDelay }}
       className={cn(
-        "relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl",
-        featured && "border-[rgba(0,212,255,0.22)] bg-[rgba(0,212,255,0.05)]"
+        "relative overflow-hidden rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6",
+        featured && "border-[rgba(0,212,170,0.22)]"
       )}
     >
-      <p className="mb-5 text-xl font-semibold leading-relaxed text-[var(--color-text-primary)] sm:text-2xl">“{quote.content}”</p>
+      <p className="mb-5 text-lg font-medium leading-relaxed text-[var(--color-text-primary)] sm:text-xl">“{quote.content}”</p>
 
       <div className="flex items-center justify-between gap-4">
-        <Link href={`/author/${quote.authorSlug}`} className="text-sm uppercase tracking-[0.24em] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+        <Link href={`/author/${quote.authorSlug}`} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
           {quote.author}
         </Link>
 
         <div className="flex items-center gap-2">
-          <button onClick={copyQuote} aria-label="copy quote" className="rounded-full border border-white/10 bg-white/5 p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+          <button onClick={copyQuote} aria-label="copy quote" className="rounded-md border border-[var(--color-border)] bg-transparent p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
             <Copy className="h-4 w-4" />
           </button>
           <ShareButton quote={quote} />
@@ -59,11 +59,13 @@ export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, feat
       </div>
 
       {showFullMeta && quote.tags.length > 0 && (
-        <div className="mt-5 flex flex-wrap gap-2 border-t border-white/8 pt-4 text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
-          {quote.tags.slice(0, 4).map((tag) => (
-            <span key={tag} className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">{tag}</span>
-          ))}
-          <span className="ml-auto">{quote.length} characters</span>
+        <div className="mt-5 flex flex-col gap-2 border-t border-[var(--color-border)] pt-4 text-sm text-[var(--color-text-muted)] sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap gap-3">
+            {quote.tags.slice(0, 4).map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+          <span>{quote.length} characters</span>
         </div>
       )}
     </motion.article>

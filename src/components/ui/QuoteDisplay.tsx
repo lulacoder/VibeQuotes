@@ -33,20 +33,19 @@ export function QuoteDisplay({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={cn('relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-7 sm:p-10', className)}
+      className={cn('relative overflow-hidden rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 sm:p-8', className)}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,212,255,0.12),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.1),transparent_30%)]" />
       <div className="relative z-10">
         <div className="mb-6 flex items-start justify-between gap-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,212,255,0.18)] bg-[rgba(0,212,255,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-[var(--color-accent-primary)]">
+          <div className="inline-flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-[rgba(255,255,255,0.03)] px-3 py-1 text-xs text-[var(--color-text-secondary)]">
             <Sparkles className="h-3.5 w-3.5" />
-            Featured quote
+            Selected quote
           </div>
           {onRefresh && (
             <button
               onClick={onRefresh}
               disabled={isRefreshing}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+              className="inline-flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-transparent px-3 py-2 text-xs text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
             >
               <RefreshCw className={cn('h-3.5 w-3.5', isRefreshing && 'animate-spin')} />
               New quote
@@ -54,13 +53,13 @@ export function QuoteDisplay({
           )}
         </div>
 
-        <blockquote className="max-w-3xl text-[clamp(2rem,4vw,4.6rem)] font-black leading-[0.98] tracking-[-0.05em] text-[var(--color-text-primary)]">
+        <blockquote className="max-w-3xl text-[clamp(2rem,4vw,4rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-[var(--color-text-primary)]">
           “{content}”
         </blockquote>
 
         <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <Link href={`/author/${authorSlug}`} className="inline-flex items-center gap-3 text-sm uppercase tracking-[0.24em] text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]">
-            <span className="h-px w-10 bg-[var(--color-accent-primary)]" />
+          <Link href={`/author/${authorSlug}`} className="inline-flex items-center gap-3 text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]">
+            <span className="h-px w-8 bg-[var(--color-accent-primary)]" />
             {author}
           </Link>
 
@@ -69,10 +68,10 @@ export function QuoteDisplay({
               onClick={() => onReaction?.(reaction === 'liked' ? 'disliked' : 'liked')}
               aria-label={reaction === 'liked' ? 'Remove like' : 'Like quote'}
               className={cn(
-                'inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all',
+                'inline-flex h-11 w-11 items-center justify-center rounded-md border transition-colors',
                 reaction === 'liked'
-                  ? 'border-[rgba(255,90,90,0.35)] bg-[rgba(255,90,90,0.14)] text-[#ff7b7b]'
-                  : 'border-white/10 bg-white/5 text-[var(--color-text-secondary)] hover:border-[var(--color-accent-primary)]/30 hover:text-[var(--color-text-primary)]'
+                  ? 'border-[rgba(255,107,157,0.35)] bg-[rgba(255,107,157,0.1)] text-[var(--color-accent-tertiary)]'
+                  : 'border-[var(--color-border)] bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
               )}
             >
               <Heart className={cn('h-4 w-4', reaction === 'liked' && 'fill-current')} />
@@ -81,12 +80,12 @@ export function QuoteDisplay({
         </div>
 
         {tags.length > 0 && (
-          <div className="mt-8 flex flex-wrap gap-2 border-t border-white/8 pt-5">
-            {tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="rounded-full border border-white/8 bg-white/[0.04] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-secondary)]">
-                {tag}
-              </span>
-            ))}
+          <div className="mt-8 border-t border-[var(--color-border)] pt-5 text-sm text-[var(--color-text-secondary)]">
+            <div className="flex flex-wrap gap-3">
+              {tags.slice(0, 4).map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
           </div>
         )}
       </div>

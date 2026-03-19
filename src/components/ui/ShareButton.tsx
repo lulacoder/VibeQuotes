@@ -61,12 +61,10 @@ export function ShareButton({ quote }: ShareButtonProps) {
   return (
     <div className="relative">
       <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className={`p-2.5 rounded-xl transition-all duration-300 ${isOpen
-            ? "bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400"
-            : "text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20"
+        className={`rounded-md border p-2.5 transition-colors ${isOpen
+            ? "border-[rgba(0,212,170,0.35)] bg-[rgba(0,212,170,0.1)] text-[var(--color-accent-primary)]"
+            : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
           }`}
         aria-label="Share quote"
       >
@@ -92,66 +90,47 @@ export function ShareButton({ quote }: ShareButtonProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 10 }}
               transition={{ type: "spring", duration: 0.3 }}
-              className="absolute right-0 top-full mt-2 z-50 glass-card rounded-2xl p-3 shadow-xl min-w-[200px]"
+              className="absolute right-0 top-full z-50 mt-2 min-w-[220px] rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3"
             >
-              {/* Close button */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="absolute right-2 top-2 rounded-md p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 pr-6">
+              <p className="mb-3 pr-6 text-xs font-medium text-[var(--color-text-muted)]">
                 Share this quote
               </p>
 
               <div className="space-y-1">
-                {/* Social Links */}
                 {shareLinks.map((link) => {
                   const Icon = link.icon;
                   return (
                     <motion.a
                       key={link.name}
-                      whileHover={{ scale: 1.02, x: 4 }}
-                      whileTap={{ scale: 0.98 }}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 text-sm font-medium transition-all ${link.color}`}
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]"
                     >
-                      <div className={`p-1.5 rounded-lg bg-gradient-to-br ${link.gradient}`}>
-                        <Icon className="w-3.5 h-3.5 text-white" />
-                      </div>
+                      <Icon className="w-4 h-4" />
                       {link.name}
                     </motion.a>
                   );
                 })}
 
-                {/* Divider */}
-                <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+                <div className="my-2 h-px bg-[var(--color-border)]" />
 
-                {/* Copy Link */}
                 <motion.button
-                  whileHover={{ scale: 1.02, x: 4 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={handleCopyLink}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all ${copied
-                      ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${copied
+                      ? "text-[var(--color-accent-primary)]"
+                      : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
                     }`}
                 >
-                  <div className={`p-1.5 rounded-lg ${copied
-                      ? "bg-green-500"
-                      : "bg-gradient-to-br from-gray-400 to-gray-600"
-                    }`}>
-                    {copied ? (
-                      <Check className="w-3.5 h-3.5 text-white" />
-                    ) : (
-                      <Link2 className="w-3.5 h-3.5 text-white" />
-                    )}
-                  </div>
+                  {copied ? <Check className="w-4 h-4" /> : <Link2 className="w-4 h-4" />}
                   {copied ? "Copied!" : "Copy Quote"}
                 </motion.button>
               </div>

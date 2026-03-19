@@ -39,7 +39,7 @@ export function StatsCard() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card-editorial rounded-sm p-5"
+      className="rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5"
     >
       <div className="grid grid-cols-4 gap-4">
         {stats.map((stat, index) => {
@@ -52,17 +52,17 @@ export function StatsCard() {
               transition={{ delay: index * 0.08 }}
               className="text-center"
             >
-              <div className="inline-flex p-2 rounded-sm bg-terracotta-500/10 mb-2">
-                <Icon className="w-4 h-4 text-terracotta-600 dark:text-terracotta-400" />
+              <div className="mb-2 inline-flex rounded-md border border-[var(--color-border)] p-2 text-[var(--color-accent-primary)]">
+                <Icon className="w-4 h-4" />
               </div>
               <div
-                className={`font-serif font-bold text-ink-900 dark:text-parchment-100 ${
+                className={`font-semibold text-[var(--color-text-primary)] ${
                   stat.isText ? "text-xs truncate" : "text-xl"
                 }`}
               >
                 {stat.value}
               </div>
-              <div className="text-[10px] text-ink-500 dark:text-parchment-500 uppercase tracking-wider mt-0.5">{stat.label}</div>
+              <div className="mt-0.5 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{stat.label}</div>
             </motion.div>
           );
         })}

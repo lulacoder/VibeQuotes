@@ -33,14 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased min-h-screen flex flex-col">
+      <body className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] antialiased">
         <ThemeProvider>
           <QueryProvider>
             <ToastProvider>
               <QuotesProvider>
                 <CollectionsProvider>
                   <MinimalHeader />
-                  <main className="flex-1">{children}</main>
+                  <main className="pt-16">{children}</main>
                   <Footer />
                   <ToastContainer />
                   <KeyboardShortcuts />

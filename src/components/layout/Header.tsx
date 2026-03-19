@@ -31,29 +31,23 @@ export function Header() {
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className={`sticky top-0 z-50 transition-all duration-500 ${
-          scrolled 
-            ? "bg-parchment-50/80 dark:bg-warm-black/80 backdrop-blur-md border-b border-ink-500/10" 
-            : "bg-transparent"
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className={`sticky top-0 z-50 border-b border-[var(--color-border)] transition-colors ${
+          scrolled ? "bg-[rgba(15,15,15,0.95)] backdrop-blur-sm" : "bg-[var(--color-bg-primary)]"
         }`}
       >
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
+        <div className="mx-auto max-w-7xl px-5 lg:px-10">
+          <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <motion.div
-                whileHover={{ rotate: 5, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-sm bg-ink-900 dark:bg-parchment-100"
-              >
-                <BookOpen className="w-4 h-4 text-parchment-50 dark:text-ink-900" />
-              </motion.div>
-              <span className="text-xl font-serif font-semibold text-ink-900 dark:text-parchment-100 tracking-tight">
+              <div className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-accent-primary)]">
+                <BookOpen className="w-4 h-4" />
+              </div>
+              <span className="text-base font-semibold text-[var(--color-text-primary)] tracking-tight">
                 VibeQuotes
               </span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden items-center gap-1 md:flex">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -61,25 +55,19 @@ export function Header() {
                 return (
                   <Link key={item.href} href={item.href} className="relative">
                     <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-sm font-medium text-sm transition-all ${
+                      className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
-                          ? "text-terracotta-600 dark:text-terracotta-400"
-                          : "text-ink-500 dark:text-parchment-400 hover:text-ink-700 dark:hover:text-parchment-200"
+                          ? "bg-white/6 text-[var(--color-text-primary)]"
+                          : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
                       <span>{item.label}</span>
 
                       {item.badge !== undefined && item.badge > 0 && (
-                        <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-terracotta-500 text-white text-[10px] font-bold rounded-sm flex items-center justify-center"
-                        >
+                        <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-md bg-[var(--color-accent-tertiary)] px-1 text-[10px] font-bold text-black">
                           {item.badge > 99 ? "99+" : item.badge}
-                        </motion.span>
+                        </span>
                       )}
                     </motion.div>
                   </Link>
@@ -91,10 +79,8 @@ export function Header() {
               <ThemeToggle />
 
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-sm text-ink-500 dark:text-parchment-400 hover:bg-parchment-200 dark:hover:bg-ink-100 transition-colors"
+                className="rounded-md border border-[var(--color-border)] p-2 text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)] md:hidden"
               >
                 <AnimatePresence mode="wait">
                   {mobileMenuOpen ? (
@@ -131,16 +117,16 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-ink-900/20 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
             />
 
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="fixed top-16 left-4 right-4 z-50 md:hidden"
+              className="fixed left-4 right-4 top-16 z-50 md:hidden"
             >
-              <div className="card-editorial rounded-sm p-2 shadow-elevated">
+              <div className="rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2">
                 <nav className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
                     const isActive = pathname === item.href;
@@ -156,16 +142,16 @@ export function Header() {
                         <Link
                           href={item.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-sm font-medium transition-all ${
+                          className={`flex items-center gap-3 rounded-md px-4 py-3 font-medium transition-colors ${
                             isActive
-                              ? "bg-terracotta-500 text-white"
-                              : "text-ink-600 dark:text-parchment-300 hover:bg-parchment-200 dark:hover:bg-ink-100"
+                              ? "bg-[rgba(0,212,170,0.12)] text-[var(--color-text-primary)]"
+                              : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
                           }`}
                         >
                           <Icon className="w-4 h-4" />
                           <span>{item.label}</span>
                           {item.badge !== undefined && item.badge > 0 && (
-                            <span className="ml-auto px-2 py-0.5 bg-ink-900/10 dark:bg-parchment-100/10 text-ink-600 dark:text-parchment-300 text-xs rounded-sm">
+                            <span className="ml-auto rounded-md border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-secondary)]">
                               {item.badge}
                             </span>
                           )}

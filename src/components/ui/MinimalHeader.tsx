@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
-import { motion } from 'framer-motion';
 import { Orbit, Search, Heart } from 'lucide-react';
 
 const navLinks = [
@@ -16,19 +15,16 @@ export function MinimalHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[rgba(5,5,7,0.72)] backdrop-blur-2xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10">
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#00d4ff,#7c3aed)] text-black shadow-[0_10px_40px_rgba(0,212,255,0.22)]">
-            <Orbit className="h-5 w-5" />
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(15,15,15,0.92)] backdrop-blur-sm">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-10">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-accent-primary)]">
+            <Orbit className="h-4 w-4" />
           </div>
-          <div>
-            <p className="text-sm uppercase tracking-[0.32em] text-[var(--color-text-muted)]">Archive</p>
-            <p className="text-lg font-black tracking-[-0.04em] text-[var(--color-text-primary)]">VibeQuotes</p>
-          </div>
+          <span className="text-sm font-semibold tracking-tight text-[var(--color-text-primary)]">VibeQuotes</span>
         </Link>
 
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1">
+        <div className="flex items-center gap-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
@@ -36,10 +32,10 @@ export function MinimalHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all',
+                  'flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
                   active
-                    ? 'bg-white/10 text-[var(--color-text-primary)]'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/5'
+                    ? 'bg-white/6 text-[var(--color-text-primary)]'
+                    : 'text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]'
                 )}
               >
                 <link.icon className="h-4 w-4" />
