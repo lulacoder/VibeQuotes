@@ -29,9 +29,58 @@
       "slug": "nelson-mandela",
       "category": "leader",
       "bio": "Freedom fighter and statesman who transformed struggle into reconciliation."
+    },
+    {
+      "name": "Alex Hormozi",
+      "slug": "alex-hormozi",
+      "category": "entrepreneur",
+      "bio": "Entrepreneur and author who scaled multiple businesses to $100M+ with irresistible offers and ruthless execution."
+    },
+    {
+      "name": "Naval Ravikant",
+      "slug": "naval-ravikant",
+      "category": "entrepreneur",
+      "bio": "Angel investor and philosopher known for timeless wisdom on wealth, happiness, and living a good life."
+    },
+    {
+      "name": "Elon Musk",
+      "slug": "elon-musk",
+      "category": "innovator",
+      "bio": "CEO of Tesla, SpaceX, and xAI — pushing humanity toward sustainable energy and multi-planetary life."
+    },
+    {
+      "name": "Gary Vaynerchuk",
+      "slug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "bio": "Serial entrepreneur, author, and speaker obsessed with hustle, kindness, and building personal brands."
+    },
+    {
+      "name": "Andrew Huberman",
+      "slug": "andrew-huberman",
+      "category": "scientist",
+      "bio": "Neuroscientist and professor sharing protocols for better sleep, focus, and performance."
+    },
+    {
+      "name": "Jocko Willink",
+      "slug": "jocko-willink",
+      "category": "leader",
+      "bio": "Navy SEAL, author, and leadership coach who teaches extreme ownership and discipline."
+    },
+    {
+      "name": "David Goggins",
+      "slug": "david-goggins",
+      "category": "athlete",
+      "bio": "Ultra-endurance athlete and motivational force who turned suffering into unbreakable mental toughness."
+    },
+    {
+      "name": "Tim Ferriss",
+      "slug": "tim-ferriss",
+      "category": "entrepreneur",
+      "bio": "Author of The 4-Hour Workweek and host of the world's most popular podcast on deconstructing world-class performers."
     }
   ],
   "quotes": [
+   
     {
       "id": "einstein-001",
       "content": "Imagination is more important than knowledge.",
@@ -281,6 +330,603 @@
       "era": "classic",
       "tags": ["education", "change", "impact"],
       "source": "speech"
+    },
+
+   
+    {
+      "id": "hormozi-001",
+      "content": "Make an offer so good people feel stupid saying no.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["sales", "value", "business"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-002",
+      "content": "The pain is the pitch.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["sales", "marketing"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-003",
+      "content": "How to stay poor: start tomorrow.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["action", "procrastination"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-004",
+      "content": "A focused fool can accomplish more than a distracted genius.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["focus", "productivity"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-005",
+      "content": "Be impatient with inputs and patient with outputs.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["discipline", "results"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-006",
+      "content": "The only thing that beats free is fast.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["speed", "value"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-007",
+      "content": "Everything is sales.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["business", "sales"],
+      "source": "podcast"
+    },
+    {
+      "id": "hormozi-008",
+      "content": "You don't rise to the level of your goals. You fall to the level of your systems.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["systems", "discipline"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-009",
+      "content": "The most addictive drug is making money doing something you love.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["passion", "wealth"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-010",
+      "content": "Grandma's rule: do the hard thing first.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["discipline", "productivity"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-011",
+      "content": "If you want to get rich, solve problems for the rich.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["wealth", "business"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-012",
+      "content": "The best marketing is education.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["marketing", "value"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-013",
+      "content": "Most people overestimate what they can do in one year and underestimate what they can do in ten.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["patience", "growth"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-014",
+      "content": "Your network is your net worth — but only if you actually help them.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["networking", "value"],
+      "source": "podcast"
+    },
+    {
+      "id": "hormozi-015",
+      "content": "The person who is willing to do the most will win.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["effort", "competition"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-016",
+      "content": "Price is just a story. Value is the truth.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["pricing", "value"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-017",
+      "content": "Stop trying to be the best. Just be the only one.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["positioning", "business"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-018",
+      "content": "The best time to plant a tree was 20 years ago. The second best time is now.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["action", "growth"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-019",
+      "content": "Build in public. The internet is the greatest leverage ever created.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["transparency", "leverage"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-020",
+      "content": "Money is just a lagging indicator of value created.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["wealth", "value"],
+      "source": "podcast"
+    },
+    {
+      "id": "hormozi-021",
+      "content": "The game is to make yourself so valuable that people can't ignore you.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["value", "positioning"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-022",
+      "content": "Discipline is the highest form of self-love.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["discipline", "self-love"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-023",
+      "content": "If it doesn't make you money or make you better, delete it.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["focus", "productivity"],
+      "source": "tweet"
+    },
+    {
+      "id": "hormozi-024",
+      "content": "The richest people in the world are the ones who solve the biggest problems.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["wealth", "problems"],
+      "source": "book"
+    },
+    {
+      "id": "hormozi-025",
+      "content": "Start ugly. Iterate fast. Win big.",
+      "author": "Alex Hormozi",
+      "authorSlug": "alex-hormozi",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["action", "iteration"],
+      "source": "tweet"
+    },
+  
+    {
+      "id": "naval-001",
+      "content": "Desire is a contract that you make with yourself to be unhappy until you get what you want.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["happiness", "desire"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-002",
+      "content": "A fit body, a calm mind, a house full of love. These things cannot be bought — they must be earned.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["health", "happiness"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-003",
+      "content": "Seek wealth, not money or status. Wealth is having assets that earn while you sleep.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["wealth", "assets"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-004",
+      "content": "Play long-term games with long-term people.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["relationships", "strategy"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-005",
+      "content": "Happiness is a choice you make and a skill you develop.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["happiness", "mindset"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-006",
+      "content": "Reading is the ultimate meta-skill.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["learning", "growth"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-007",
+      "content": "Leverage is a force multiplier.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["wealth", "leverage"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-008",
+      "content": "The modern struggle is lone individuals against huge corporations.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["society", "business"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-009",
+      "content": "If you can't explain it simply, you don't understand it well enough.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["clarity", "understanding"],
+      "source": "tweet"
+    },
+    {
+      "id": "naval-010",
+      "content": "The best way to predict the future is to create it.",
+      "author": "Naval Ravikant",
+      "authorSlug": "naval-ravikant",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["future", "creation"],
+      "source": "tweet"
+    },
+  
+    {
+      "id": "musk-001",
+      "content": "When something is important enough, you do it even if the odds are not in your favor.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["persistence", "courage"],
+      "source": "interview"
+    },
+    {
+      "id": "musk-002",
+      "content": "You get paid in direct proportion to the difficulty of problems you solve.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["value", "problems"],
+      "source": "tweet"
+    },
+    {
+      "id": "musk-003",
+      "content": "Failure is an option here. If things are not failing, you are not innovating enough.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["innovation", "failure"],
+      "source": "interview"
+    },
+    {
+      "id": "musk-004",
+      "content": "Constantly think about how you could be doing things better.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["improvement", "thinking"],
+      "source": "tweet"
+    },
+    {
+      "id": "musk-005",
+      "content": "I could either watch it happen or be a part of it.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["action", "leadership"],
+      "source": "tweet"
+    },
+    {
+      "id": "musk-006",
+      "content": "Work like hell. I mean you just have to put in 80 to 100 hour weeks every week.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["work", "hustle"],
+      "source": "interview"
+    },
+    {
+      "id": "musk-007",
+      "content": "The path to the CEO's office should not be through the CFO's office.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["leadership", "business"],
+      "source": "tweet"
+    },
+    {
+      "id": "musk-008",
+      "content": "If you wake up in the morning and think the future is going to be better, it is a bright day.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["optimism", "future"],
+      "source": "interview"
+    },
+    {
+      "id": "musk-009",
+      "content": "People work better when they know what the goal is and why.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["leadership", "motivation"],
+      "source": "tweet"
+    },
+    {
+      "id": "musk-010",
+      "content": "Brand is just a perception, and perception will match reality over time.",
+      "author": "Elon Musk",
+      "authorSlug": "elon-musk",
+      "category": "innovator",
+      "era": "modern",
+      "tags": ["branding", "reality"],
+      "source": "tweet"
+    },
+    
+    {
+      "id": "gary-001",
+      "content": "Stop doing shit you hate.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["passion", "happiness"],
+      "source": "book"
+    },
+    {
+      "id": "gary-002",
+      "content": "Love your family, work super hard, live your passion.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["family", "hustle", "passion"],
+      "source": "book"
+    },
+    {
+      "id": "gary-003",
+      "content": "Ideas are shit. Execution is everything.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["execution", "action"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-004",
+      "content": "The only thing that matters is that you are happy.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["happiness", "life"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-005",
+      "content": "Patience + persistence = opportunity.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["patience", "persistence"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-006",
+      "content": "Hustle is the most important word in business.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["hustle", "business"],
+      "source": "book"
+    },
+    {
+      "id": "gary-007",
+      "content": "Kindness is the ultimate competitive advantage.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["kindness", "business"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-008",
+      "content": "You have to be willing to be misunderstood.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["leadership", "courage"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-009",
+      "content": "Document, don't create.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["content", "branding"],
+      "source": "tweet"
+    },
+    {
+      "id": "gary-010",
+      "content": "Work hard in silence, let success make the noise.",
+      "author": "Gary Vaynerchuk",
+      "authorSlug": "gary-vaynerchuk",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["work", "success"],
+      "source": "tweet"
+    },
+   
+    {
+      "id": "huberman-001",
+      "content": "The best way to improve your sleep is to get morning sunlight within 30 minutes of waking.",
+      "author": "Andrew Huberman",
+      "authorSlug": "andrew-huberman",
+      "category": "scientist",
+      "era": "modern",
+      "tags": ["sleep", "health", "protocol"],
+      "source": "tweet"
+    },
+    {
+      "id": "jocko-001",
+      "content": "Discipline equals freedom.",
+      "author": "Jocko Willink",
+      "authorSlug": "jocko-willink",
+      "category": "leader",
+      "era": "modern",
+      "tags": ["discipline", "freedom"],
+      "source": "book"
+    },
+    {
+      "id": "goggins-001",
+      "content": "When you think you're done, you're only 40% there.",
+      "author": "David Goggins",
+      "authorSlug": "david-goggins",
+      "category": "athlete",
+      "era": "modern",
+      "tags": ["mental-toughness", "limits"],
+      "source": "book"
+    },
+    {
+      "id": "ferriss-001",
+      "content": "Focus on being productive instead of busy.",
+      "author": "Tim Ferriss",
+      "authorSlug": "tim-ferriss",
+      "category": "entrepreneur",
+      "era": "modern",
+      "tags": ["productivity", "focus"],
+      "source": "tweet"
     }
+    
   ]
 }
