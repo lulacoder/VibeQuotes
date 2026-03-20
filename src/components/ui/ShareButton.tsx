@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShareNetwork, XLogo, FacebookLogo, LinkedinLogo, LinkSimple, Check, X } from "@phosphor-icons/react";
 import { Quote } from "@/lib/types";
@@ -13,12 +14,21 @@ interface ShareButtonProps {
 export function ShareButton({ quote }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [pos, setPos] = useState({ top: 0, right: 0 });
+  const btnRef = useRef<HTMLButtonElement>(null);
   const { addToast } = useToast();
 
   const shareText = `"${quote.content}" — ${quote.author}`;
   const encodedText = encodeURIComponent(shareText);
   const url = typeof window !== "undefined" ? window.location.href : "";
   const encodedUrl = encodeURIComponent(url);
+
+  useEffect(() => {
+    if (isOpen && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
+    }
+  }, [isOpen]);
 
   const shareLinks = [
     {
@@ -55,6 +65,7 @@ export function ShareButton({ quote }: ShareButtonProps) {
   return (
     <div className="relative">
       <motion.button
+        ref={btnRef}
         onClick={() => setIsOpen(!isOpen)}
         className={`icon-btn ${isOpen ? "border-[var(--color-border-hover)] text-[var(--color-accent-primary)]" : ""}`}
         aria-label="Share quote"
@@ -62,71 +73,75 @@ export function ShareButton({ quote }: ShareButtonProps) {
         <ShareNetwork className="h-3.5 w-3.5" />
       </motion.button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-40"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 8 }}
-              transition={{ type: "spring", duration: 0.35 }}
-              className="absolute right-0 top-full z-50 mt-2 min-w-[200px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2.5 shadow-xl"
-            >
-              <button
+      {typeof window !== "undefined" && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 onClick={() => setIsOpen(false)}
-                className="absolute right-2.5 top-2.5 rounded-md p-1 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
+                className="fixed inset-0 z-[9999]"
+              />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: 8 }}
+                transition={{ type: "spring", duration: 0.35 }}
+                className="fixed z-[10000] min-w-[200px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2.5 shadow-xl"
+                style={{ top: pos.top, right: pos.right }}
               >
-                <X className="h-3.5 w-3.5" />
-              </button>
-
-              <p className="mb-2.5 pr-6 text-[0.7rem] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Share
-              </p>
-
-              <div className="space-y-0.5">
-                {shareLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <a
-                      key={link.name}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
-                    >
-                      <Icon className="h-3.5 w-3.5" />
-                      {link.name}
-                    </a>
-                  );
-                })}
-
-                <div className="my-1.5 h-px bg-[var(--color-border)]" />
-
                 <button
-                  onClick={handleCopyLink}
-                  className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors ${
-                    copied
-                      ? "text-[var(--color-accent-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
-                  }`}
+                  onClick={() => setIsOpen(false)}
+                  className="absolute right-2.5 top-2.5 rounded-md p-1 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
                 >
-                  {copied ? <Check className="h-3.5 w-3.5" /> : <LinkSimple className="h-3.5 w-3.5" />}
-                  {copied ? "Copied" : "Copy quote"}
+                  <X className="h-3.5 w-3.5" />
                 </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+
+                <p className="mb-2.5 pr-6 text-[0.7rem] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+                  Share
+                </p>
+
+                <div className="space-y-0.5">
+                  {shareLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <a
+                        key={link.name}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                        {link.name}
+                      </a>
+                    );
+                  })}
+
+                  <div className="my-1.5 h-px bg-[var(--color-border)]" />
+
+                  <button
+                    onClick={handleCopyLink}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors ${
+                      copied
+                        ? "text-[var(--color-accent-primary)]"
+                        : "text-[var(--color-text-secondary)] hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
+                    }`}
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <LinkSimple className="h-3.5 w-3.5" />}
+                    {copied ? "Copied" : "Copy quote"}
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }

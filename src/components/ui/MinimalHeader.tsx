@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils/cn';
-import { Compass, MagnifyingGlass, Heart, List, X } from '@phosphor-icons/react';
+import { Compass, MagnifyingGlass, Heart } from '@phosphor-icons/react';
 import { ThemeToggle } from './ThemeToggle';
 import { useQuotes } from '@/context/QuotesContext';
 import { useState } from 'react';
@@ -68,17 +68,23 @@ export function MinimalHeader() {
               className="icon-btn md:hidden"
               aria-label="Toggle menu"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {open ? (
-                  <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <X className="h-4 w-4" />
-                  </motion.span>
-                ) : (
-                  <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <List className="h-4 w-4" />
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              <span className="relative block h-4 w-4">
+                <span
+                  className={`absolute left-0 block h-[1.5px] w-4 origin-center bg-current transition-all duration-200 ${
+                    open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-[3px]"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-1/2 block h-[1.5px] w-4 -translate-y-1/2 bg-current transition-all duration-200 ${
+                    open ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-[1.5px] w-4 origin-center bg-current transition-all duration-200 ${
+                    open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-[3px]"
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </nav>

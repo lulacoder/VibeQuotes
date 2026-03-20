@@ -11,7 +11,6 @@ import { SearchBar } from "@/components/ui/SearchBar";
 import { CategoryFilter } from "@/components/ui/CategoryFilter";
 import { EraFilter } from "@/components/ui/EraFilter";
 import { QuoteCard } from "@/components/ui/QuoteCard";
-import { Footer } from "@/components/layout/Footer";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -230,7 +229,6 @@ function SearchContent() {
           </div>
         )}
       </div>
-      <Footer />
     </main>
   );
 }
