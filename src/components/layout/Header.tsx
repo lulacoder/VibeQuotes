@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useQuotes } from "@/context/QuotesContext";
-import { Search, Heart, Home, Menu, X, BookOpen } from "lucide-react";
+import { MagnifyingGlass, Heart, House, List, X, BookOpenText } from "@phosphor-icons/react";
 
 export function Header() {
   const pathname = usePathname();
@@ -21,8 +21,8 @@ export function Header() {
   }, []);
 
   const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/search", label: "Explore", icon: Search },
+    { href: "/", label: "Home", icon: House },
+    { href: "/search", label: "Explore", icon: MagnifyingGlass },
     { href: "/likes", label: "Saved", icon: Heart, badge: likedCount },
   ];
 
@@ -32,17 +32,17 @@ export function Header() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className={`sticky top-0 z-50 border-b border-[var(--color-border)] transition-colors ${
-          scrolled ? "bg-[rgba(15,15,15,0.95)] backdrop-blur-sm" : "bg-[var(--color-bg-primary)]"
+        className={`sticky top-0 z-50 border-b border-[var(--color-border)] transition-colors duration-300 ${
+          scrolled ? "bg-[var(--color-bg-primary)]/95 backdrop-blur-sm" : "bg-[var(--color-bg-primary)]"
         }`}
       >
         <div className="mx-auto max-w-7xl px-5 lg:px-10">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-accent-primary)]">
-                <BookOpen className="w-4 h-4" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-accent-primary)]">
+                <BookOpenText weight="duotone" className="h-4 w-4" />
               </div>
-              <span className="text-base font-semibold text-[var(--color-text-primary)] tracking-tight">
+              <span className="font-display text-base font-semibold tracking-tight text-[var(--color-text-primary)]">
                 VibeQuotes
               </span>
             </Link>
@@ -54,22 +54,22 @@ export function Header() {
 
                 return (
                   <Link key={item.href} href={item.href} className="relative">
-                    <motion.div
-                      className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    <div
+                      className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
-                          ? "bg-white/6 text-[var(--color-text-primary)]"
-                          : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
+                          ? "text-[var(--color-accent-primary)]"
+                          : "text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]"
                       }`}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon weight={isActive ? "fill" : "regular"} className="h-4 w-4" />
                       <span>{item.label}</span>
 
                       {item.badge !== undefined && item.badge > 0 && (
-                        <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-md bg-[var(--color-accent-tertiary)] px-1 text-[10px] font-bold text-black">
+                        <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[var(--color-accent-tertiary)] px-1 text-[10px] font-bold text-white">
                           {item.badge > 99 ? "99+" : item.badge}
                         </span>
                       )}
-                    </motion.div>
+                    </div>
                   </Link>
                 );
               })}
@@ -78,9 +78,9 @@ export function Header() {
             <div className="flex items-center gap-2">
               <ThemeToggle />
 
-              <motion.button
+              <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="rounded-md border border-[var(--color-border)] p-2 text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)] md:hidden"
+                className="icon-btn md:hidden"
               >
                 <AnimatePresence mode="wait">
                   {mobileMenuOpen ? (
@@ -90,7 +90,7 @@ export function Header() {
                       animate={{ rotate: 0, opacity: 1 }}
                       exit={{ rotate: 90, opacity: 0 }}
                     >
-                      <X className="w-4 h-4" />
+                      <X className="h-4 w-4" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -99,11 +99,11 @@ export function Header() {
                       animate={{ rotate: 0, opacity: 1 }}
                       exit={{ rotate: -90, opacity: 0 }}
                     >
-                      <Menu className="w-4 h-4" />
+                      <List className="h-4 w-4" />
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function Header() {
               exit={{ opacity: 0, y: -10 }}
               className="fixed left-4 right-4 top-16 z-50 md:hidden"
             >
-              <div className="rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2">
+              <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-2">
                 <nav className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
                     const isActive = pathname === item.href;
@@ -142,16 +142,16 @@ export function Header() {
                         <Link
                           href={item.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className={`flex items-center gap-3 rounded-md px-4 py-3 font-medium transition-colors ${
+                          className={`flex items-center gap-3 rounded-lg px-4 py-3 font-medium transition-colors ${
                             isActive
-                              ? "bg-[rgba(0,212,170,0.12)] text-[var(--color-text-primary)]"
-                              : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
+                              ? "text-[var(--color-accent-primary)]"
+                              : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                           }`}
                         >
-                          <Icon className="w-4 h-4" />
+                          <Icon weight={isActive ? "fill" : "regular"} className="h-4 w-4" />
                           <span>{item.label}</span>
                           {item.badge !== undefined && item.badge > 0 && (
-                            <span className="ml-auto rounded-md border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-secondary)]">
+                            <span className="ml-auto rounded-full border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-secondary)]">
                               {item.badge}
                             </span>
                           )}

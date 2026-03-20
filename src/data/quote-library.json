@@ -45,7 +45,7 @@
     {
       "name": "Elon Musk",
       "slug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "bio": "CEO of Tesla, SpaceX, and xAI — pushing humanity toward sustainable energy and multi-planetary life."
     },
     {
@@ -690,7 +690,7 @@
       "content": "When something is important enough, you do it even if the odds are not in your favor.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["persistence", "courage"],
       "source": "interview"
@@ -700,7 +700,7 @@
       "content": "You get paid in direct proportion to the difficulty of problems you solve.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["value", "problems"],
       "source": "tweet"
@@ -710,7 +710,7 @@
       "content": "Failure is an option here. If things are not failing, you are not innovating enough.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["innovation", "failure"],
       "source": "interview"
@@ -720,7 +720,7 @@
       "content": "Constantly think about how you could be doing things better.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["improvement", "thinking"],
       "source": "tweet"
@@ -730,7 +730,7 @@
       "content": "I could either watch it happen or be a part of it.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["action", "leadership"],
       "source": "tweet"
@@ -740,7 +740,7 @@
       "content": "Work like hell. I mean you just have to put in 80 to 100 hour weeks every week.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["work", "hustle"],
       "source": "interview"
@@ -750,7 +750,7 @@
       "content": "The path to the CEO's office should not be through the CFO's office.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["leadership", "business"],
       "source": "tweet"
@@ -760,7 +760,7 @@
       "content": "If you wake up in the morning and think the future is going to be better, it is a bright day.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["optimism", "future"],
       "source": "interview"
@@ -770,7 +770,7 @@
       "content": "People work better when they know what the goal is and why.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["leadership", "motivation"],
       "source": "tweet"
@@ -780,7 +780,7 @@
       "content": "Brand is just a perception, and perception will match reality over time.",
       "author": "Elon Musk",
       "authorSlug": "elon-musk",
-      "category": "innovator",
+      "category": "entrepreneur",
       "era": "modern",
       "tags": ["branding", "reality"],
       "source": "tweet"

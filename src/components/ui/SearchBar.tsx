@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Sparkles, ArrowRight } from "lucide-react";
+import { MagnifyingGlass, X, Sparkle, ArrowRight } from "@phosphor-icons/react";
 
 interface SearchBarProps {
   placeholder?: string;
@@ -18,9 +18,9 @@ const SEARCH_SUGGESTIONS = [
   "success",
   "happiness",
   "life",
-  "motivation",
   "courage",
   "dreams",
+  "freedom",
 ];
 
 export function SearchBar({
@@ -37,7 +37,6 @@ export function SearchBar({
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  // Keyboard shortcut: "/" to focus search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement !== inputRef.current) {
@@ -54,7 +53,6 @@ export function SearchBar({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Debounced search
   const debouncedSearch = useCallback(
     (value: string) => {
       if (debounceRef.current) {
@@ -71,7 +69,7 @@ export function SearchBar({
           params.delete("q");
         }
         router.push(`/search?${params.toString()}`);
-      }, 400);
+      }, 350);
     },
     [router, searchParams, onSearch]
   );
@@ -111,12 +109,22 @@ export function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative w-full max-w-2xl mx-auto">
-      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="relative">
-        <div className={`relative rounded-[12px] border bg-[var(--color-bg-primary)] transition-colors ${isFocused ? "border-[rgba(0,212,170,0.4)]" : "border-[var(--color-border)]"
-          }`}>
+    <form onSubmit={handleSubmit} className="relative w-full">
+      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="relative">
+        <div
+          className={`relative rounded-xl border bg-[var(--color-bg-primary)] transition-all duration-300 ${
+            isFocused
+              ? "border-[var(--color-border-hover)] shadow-[0_0_0_3px_rgba(212,165,74,0.06)]"
+              : "border-[var(--color-border)]"
+          }`}
+        >
           <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
-            <Search className={`h-5 w-5 ${isFocused ? "text-[var(--color-accent-primary)]" : "text-[var(--color-text-muted)]"}`} />
+            <MagnifyingGlass
+              weight={isFocused ? "bold" : "regular"}
+              className={`h-[18px] w-[18px] transition-colors duration-200 ${
+                isFocused ? "text-[var(--color-accent-primary)]" : "text-[var(--color-text-muted)]"
+              }`}
+            />
           </div>
 
           <input
@@ -134,10 +142,10 @@ export function SearchBar({
             }}
             placeholder={placeholder}
             autoFocus={autoFocus}
-            className="ui-input pl-12 pr-20 text-base"
+            className="input-field pl-11 pr-20 text-sm"
           />
 
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
             <AnimatePresence>
               {query && (
                 <motion.button
@@ -146,17 +154,15 @@ export function SearchBar({
                   exit={{ opacity: 0, scale: 0.8 }}
                   type="button"
                   onClick={handleClear}
-                  className="rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]"
+                  className="rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="h-3.5 w-3.5" />
                 </motion.button>
               )}
             </AnimatePresence>
 
             {!query && !isFocused && (
-              <kbd className="hidden rounded-md border border-[var(--color-border)] px-2 py-1 text-xs text-[var(--color-text-muted)] sm:inline-flex">
-                /
-              </kbd>
+              <kbd>/</kbd>
             )}
           </div>
         </div>
@@ -164,29 +170,29 @@ export function SearchBar({
         <AnimatePresence>
           {showSuggestions && !query && (
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              initial={{ opacity: 0, y: -6, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              exit={{ opacity: 0, y: -6, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 z-50 mt-2 rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4"
+              className="absolute top-full left-0 right-0 z-50 mt-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-4 shadow-xl"
             >
-              <p className="mb-3 flex items-center gap-2 text-xs font-medium text-[var(--color-text-muted)]">
-                <Sparkles className="w-3 h-3" />
-                Popular searches
+              <p className="mb-3 flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+                <Sparkle weight="duotone" className="h-3 w-3 text-[var(--color-accent-primary)]" />
+                Popular
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {SEARCH_SUGGESTIONS.map((suggestion, index) => (
                   <motion.button
                     key={suggestion}
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.03 }}
+                    transition={{ delay: index * 0.025 }}
                     type="button"
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="flex items-center gap-1 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:border-[rgba(0,212,170,0.35)] hover:text-[var(--color-text-primary)]"
+                    className="pill gap-1"
                   >
                     {suggestion}
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="h-3 w-3" />
                   </motion.button>
                 ))}
               </div>
@@ -199,9 +205,9 @@ export function SearchBar({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="mt-3 text-center text-xs text-[var(--color-text-muted)]"
+        className="mt-2.5 text-center text-xs text-[var(--color-text-muted)]"
       >
-        Press <kbd className="mx-1 rounded-md border border-[var(--color-border)] px-1.5 py-0.5">/</kbd> to focus · <kbd className="mx-1 rounded-md border border-[var(--color-border)] px-1.5 py-0.5">Esc</kbd> to close
+        <kbd>/</kbd> to focus &middot; <kbd>Esc</kbd> to close
       </motion.p>
     </form>
   );

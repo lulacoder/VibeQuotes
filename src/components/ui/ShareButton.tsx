@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Twitter, Facebook, Linkedin, Link2, Check, X } from "lucide-react";
+import { ShareNetwork, XLogo, FacebookLogo, LinkedinLogo, LinkSimple, Check, X } from "@phosphor-icons/react";
 import { Quote } from "@/lib/types";
 import { useToast } from "@/context/ToastContext";
 
@@ -23,24 +23,18 @@ export function ShareButton({ quote }: ShareButtonProps) {
   const shareLinks = [
     {
       name: "Twitter",
-      icon: Twitter,
+      icon: XLogo,
       url: `https://twitter.com/intent/tweet?text=${encodedText}`,
-      color: "hover:bg-blue-500 hover:text-white",
-      gradient: "from-blue-400 to-blue-600",
     },
     {
       name: "Facebook",
-      icon: Facebook,
+      icon: FacebookLogo,
       url: `https://www.facebook.com/sharer/sharer.php?quote=${encodedText}`,
-      color: "hover:bg-blue-600 hover:text-white",
-      gradient: "from-blue-500 to-blue-700",
     },
     {
       name: "LinkedIn",
-      icon: Linkedin,
+      icon: LinkedinLogo,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      color: "hover:bg-blue-700 hover:text-white",
-      gradient: "from-blue-600 to-blue-800",
     },
   ];
 
@@ -48,11 +42,11 @@ export function ShareButton({ quote }: ShareButtonProps) {
     try {
       await navigator.clipboard.writeText(shareText);
       setCopied(true);
-      addToast("Quote copied to clipboard!", "success");
+      addToast("Quote copied", "success");
       setTimeout(() => {
         setCopied(false);
         setIsOpen(false);
-      }, 1500);
+      }, 1200);
     } catch {
       addToast("Failed to copy", "error");
     }
@@ -62,20 +56,15 @@ export function ShareButton({ quote }: ShareButtonProps) {
     <div className="relative">
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className={`rounded-md border p-2.5 transition-colors ${isOpen
-            ? "border-[rgba(0,212,170,0.35)] bg-[rgba(0,212,170,0.1)] text-[var(--color-accent-primary)]"
-            : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-          }`}
+        className={`icon-btn ${isOpen ? "border-[var(--color-border-hover)] text-[var(--color-accent-primary)]" : ""}`}
         aria-label="Share quote"
       >
-        <Share2 className="w-5 h-5" />
+        <ShareNetwork className="h-3.5 w-3.5" />
       </motion.button>
 
-      {/* Share Menu */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -84,55 +73,55 @@ export function ShareButton({ quote }: ShareButtonProps) {
               className="fixed inset-0 z-40"
             />
 
-            {/* Menu */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              initial={{ opacity: 0, scale: 0.92, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 10 }}
-              transition={{ type: "spring", duration: 0.3 }}
-              className="absolute right-0 top-full z-50 mt-2 min-w-[220px] rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3"
+              exit={{ opacity: 0, scale: 0.92, y: 8 }}
+              transition={{ type: "spring", duration: 0.35 }}
+              className="absolute right-0 top-full z-50 mt-2 min-w-[200px] rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-2.5 shadow-xl"
             >
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute right-2 top-2 rounded-md p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+                className="absolute right-2.5 top-2.5 rounded-md p-1 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
               >
-                <X className="w-4 h-4" />
+                <X className="h-3.5 w-3.5" />
               </button>
 
-              <p className="mb-3 pr-6 text-xs font-medium text-[var(--color-text-muted)]">
-                Share this quote
+              <p className="mb-2.5 pr-6 text-[0.7rem] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+                Share
               </p>
 
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {shareLinks.map((link) => {
                   const Icon = link.icon;
                   return (
-                    <motion.a
+                    <a
                       key={link.name}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-[var(--color-text-primary)]"
+                      className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[rgba(212,165,74,0.06)] hover:text-[var(--color-text-primary)]"
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="h-3.5 w-3.5" />
                       {link.name}
-                    </motion.a>
+                    </a>
                   );
                 })}
 
-                <div className="my-2 h-px bg-[var(--color-border)]" />
+                <div className="my-1.5 h-px bg-[var(--color-border)]" />
 
-                <motion.button
+                <button
                   onClick={handleCopyLink}
-                  className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${copied
+                  className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors ${
+                    copied
                       ? "text-[var(--color-accent-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]"
-                    }`}
+                      : "text-[var(--color-text-secondary)] hover:bg-[rgba(212,165,74,0.06)] hover:text-[var(--color-text-primary)]"
+                  }`}
                 >
-                  {copied ? <Check className="w-4 h-4" /> : <Link2 className="w-4 h-4" />}
-                  {copied ? "Copied!" : "Copy Quote"}
-                </motion.button>
+                  {copied ? <Check className="h-3.5 w-3.5" /> : <LinkSimple className="h-3.5 w-3.5" />}
+                  {copied ? "Copied" : "Copy quote"}
+                </button>
               </div>
             </motion.div>
           </>

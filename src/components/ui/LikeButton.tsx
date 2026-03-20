@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Heart, ThumbsDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { Heart, ThumbsDown } from "@phosphor-icons/react";
 
 interface LikeButtonProps {
   isLiked: boolean;
@@ -21,34 +21,30 @@ export function LikeButton({ isLiked, isDisliked, onLike, onDislike }: LikeButto
   };
 
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-1">
       <motion.button
         onClick={handleLike}
-        className={`relative rounded-md border p-2.5 transition-colors ${
+        className={`icon-btn ${
           isLiked
-            ? "border-[rgba(255,107,157,0.35)] bg-[rgba(255,107,157,0.1)] text-[var(--color-accent-tertiary)]"
-            : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+            ? "border-[rgba(212,107,107,0.3)] bg-[rgba(212,107,107,0.08)] text-[var(--color-accent-tertiary)]"
+            : ""
         }`}
         aria-label="Add to favorites"
       >
         <motion.div
-          animate={isPressed ? { scale: [1, 0.92, 1] } : {}}
+          animate={isPressed ? { scale: [1, 0.88, 1] } : {}}
           transition={{ duration: 0.15 }}
         >
-          <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
+          <Heart weight={isLiked ? "fill" : "regular"} className="h-3.5 w-3.5" />
         </motion.div>
       </motion.button>
 
       <motion.button
         onClick={onDislike}
-        className={`rounded-md border p-2.5 transition-colors ${
-          isDisliked
-            ? "border-[var(--color-border)] bg-white/5 text-[var(--color-text-primary)]"
-            : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-        }`}
+        className={`icon-btn ${isDisliked ? "bg-white/5 text-[var(--color-text-primary)]" : ""}`}
         aria-label="Dislike quote"
       >
-        <ThumbsDown className={`h-4 w-4 ${isDisliked ? "fill-current" : ""}`} />
+        <ThumbsDown weight={isDisliked ? "fill" : "regular"} className="h-3.5 w-3.5" />
       </motion.button>
     </div>
   );

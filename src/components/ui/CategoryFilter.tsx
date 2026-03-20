@@ -12,7 +12,10 @@ interface CategoryFilterProps {
 export function CategoryFilter({ selectedCategory, onCategorySelect }: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap gap-2">
-      <FilterPill active={selectedCategory === null} onClick={() => onCategorySelect(null)}>
+      <FilterPill
+        active={selectedCategory === null}
+        onClick={() => onCategorySelect(null)}
+      >
         All
       </FilterPill>
       {AUTHOR_CATEGORIES.map((category) => (
@@ -33,13 +36,9 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
   return (
     <motion.button
       whileHover={{ y: -1 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.97 }}
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors ${
-        active
-          ? "bg-[var(--color-accent-primary)] text-black"
-          : "border border-white/10 bg-white/[0.04] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-      }`}
+      className={`pill ${active ? "pill-active" : ""}`}
     >
       {children}
     </motion.button>

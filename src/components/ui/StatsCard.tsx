@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart, Users, Tag, Award } from "lucide-react";
+import { Heart, Users, Tag, Medal } from "@phosphor-icons/react";
 import { useQuotes } from "@/context/QuotesContext";
 
 export function StatsCard() {
@@ -28,7 +28,7 @@ export function StatsCard() {
     {
       label: "Level",
       value: likedCount >= 50 ? "Master" : likedCount >= 20 ? "Pro" : likedCount >= 5 ? "Explorer" : "New",
-      icon: Award,
+      icon: Medal,
       isText: true,
     },
   ];
@@ -39,7 +39,7 @@ export function StatsCard() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5"
+      className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5 transition-colors duration-300"
     >
       <div className="grid grid-cols-4 gap-4">
         {stats.map((stat, index) => {
@@ -52,12 +52,12 @@ export function StatsCard() {
               transition={{ delay: index * 0.08 }}
               className="text-center"
             >
-              <div className="mb-2 inline-flex rounded-md border border-[var(--color-border)] p-2 text-[var(--color-accent-primary)]">
-                <Icon className="w-4 h-4" />
+              <div className="mb-2 inline-flex rounded-lg border border-[var(--color-border)] p-2 text-[var(--color-accent-primary)]">
+                <Icon weight="duotone" className="h-4 w-4" />
               </div>
               <div
                 className={`font-semibold text-[var(--color-text-primary)] ${
-                  stat.isText ? "text-xs truncate" : "text-xl"
+                  stat.isText ? "truncate text-xs" : "text-xl"
                 }`}
               >
                 {stat.value}

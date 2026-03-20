@@ -96,10 +96,13 @@ function paginate(items: Quote[], page = 1, limit = 10): PaginatedQuotes {
 }
 
 export function getAllAuthors() {
-  return [
-    ...library.authors,
-    ...Object.values(MODERN_AUTHORS),
-  ];
+  const seen = new Set<string>();
+  const all = [...library.authors, ...Object.values(MODERN_AUTHORS)];
+  return all.filter((author) => {
+    if (seen.has(author.slug)) return false;
+    seen.add(author.slug);
+    return true;
+  });
 }
 
 export function getAllModernAuthors() {

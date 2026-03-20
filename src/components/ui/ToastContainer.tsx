@@ -3,29 +3,26 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/context/ToastContext";
-import { CheckCircle, AlertCircle, Info, X } from "lucide-react";
+import { CheckCircle, WarningCircle, Info, X } from "@phosphor-icons/react";
 
-const toastConfig = {
+const toastStyles = {
   success: {
     icon: CheckCircle,
-    gradient: "from-green-500 to-emerald-500",
-    bg: "bg-green-50 dark:bg-green-900/20",
-    border: "border-green-200 dark:border-green-800",
-    text: "text-green-800 dark:text-green-200",
+    accent: "var(--color-accent-primary)",
+    bg: "rgba(212,165,74,0.06)",
+    border: "rgba(212,165,74,0.18)",
   },
   error: {
-    icon: AlertCircle,
-    gradient: "from-red-500 to-rose-500",
-    bg: "bg-red-50 dark:bg-red-900/20",
-    border: "border-red-200 dark:border-red-800",
-    text: "text-red-800 dark:text-red-200",
+    icon: WarningCircle,
+    accent: "var(--color-accent-tertiary)",
+    bg: "rgba(212,107,107,0.06)",
+    border: "rgba(212,107,107,0.18)",
   },
   info: {
     icon: Info,
-    gradient: "from-blue-500 to-cyan-500",
-    bg: "bg-blue-50 dark:bg-blue-900/20",
-    border: "border-blue-200 dark:border-blue-800",
-    text: "text-blue-800 dark:text-blue-200",
+    accent: "var(--color-accent-warm)",
+    bg: "rgba(201,135,92,0.06)",
+    border: "rgba(201,135,92,0.18)",
   },
 };
 
@@ -33,52 +30,51 @@ export function ToastContainer() {
   const { toasts, removeToast } = useToast();
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 max-w-sm">
+    <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-2.5 max-w-sm">
       <AnimatePresence mode="popLayout">
         {toasts.map((toast) => {
-          const config = toastConfig[toast.type];
+          const config = toastStyles[toast.type];
           const Icon = config.icon;
 
           return (
             <motion.div
               key={toast.id}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 100, scale: 0.9 }}
+              exit={{ opacity: 0, x: 80, scale: 0.95 }}
               transition={{ type: "spring", duration: 0.4 }}
-              className={`relative overflow-hidden backdrop-blur-xl rounded-2xl shadow-lg border ${config.bg} ${config.border}`}
+              className="relative overflow-hidden rounded-xl border shadow-xl backdrop-blur-xl"
+              style={{
+                background: config.bg,
+                borderColor: config.border,
+              }}
             >
-              {/* Gradient accent line */}
-              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${config.gradient}`} />
+              <div
+                className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{ background: config.accent }}
+              />
 
               <div className="flex items-center gap-3 px-4 py-3">
-                {/* Icon */}
-                <div className={`flex-shrink-0 p-2 rounded-xl bg-gradient-to-br ${config.gradient}`}>
-                  <Icon className="w-4 h-4 text-white" />
-                </div>
+                <Icon weight="fill" className="h-4 w-4 shrink-0" style={{ color: config.accent }} />
 
-                {/* Message */}
-                <p className={`flex-1 text-sm font-medium ${config.text}`}>
+                <p className="flex-1 text-sm font-medium text-[var(--color-text-primary)]">
                   {toast.message}
                 </p>
 
-                {/* Close button */}
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                <button
                   onClick={() => removeToast(toast.id)}
-                  className={`flex-shrink-0 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 ${config.text} opacity-60 hover:opacity-100 transition-opacity`}
+                  className="shrink-0 rounded-md p-1 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
                 >
-                  <X className="w-4 h-4" />
-                </motion.button>
+                  <X className="h-3.5 w-3.5" />
+                </button>
               </div>
 
-              {/* Progress bar */}
               <motion.div
                 initial={{ scaleX: 1 }}
                 animate={{ scaleX: 0 }}
-                transition={{ duration: 4, ease: "linear" }}
-                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${config.gradient} origin-left`}
+                transition={{ duration: 3.5, ease: "linear" }}
+                className="absolute bottom-0 left-0 right-0 h-[2px] origin-left"
+                style={{ background: config.accent }}
               />
             </motion.div>
           );

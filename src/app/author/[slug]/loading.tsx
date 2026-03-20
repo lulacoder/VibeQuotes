@@ -1,18 +1,13 @@
-import { AuthorCardSkeleton, QuoteListSkeleton } from "@/components/ui/Skeleton";
+import { QuoteListSkeleton } from "@/components/ui/Skeleton";
 
 export default function AuthorLoading() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
-      {/* Back Link Skeleton */}
-      <div className="h-5 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-pulse" />
-      
-      {/* Author Card Skeleton */}
-      <AuthorCardSkeleton />
-      
-      {/* Quotes Section */}
-      <div className="mt-12">
-        <div className="h-7 w-48 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-pulse" />
-        <QuoteListSkeleton count={3} />
+    <div className="min-h-screen bg-[var(--color-bg-primary)] px-5 pt-24 lg:px-10">
+      <div className="mx-auto max-w-6xl">
+        <div className="shimmer h-4 w-28 rounded-lg mb-6" />
+        <div className="shimmer h-48 rounded-2xl mb-8" />
+        <div className="shimmer h-6 w-40 rounded-lg mb-5" />
+        <QuoteListSkeleton count={4} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Copy } from "lucide-react";
+import { Copy } from "@phosphor-icons/react";
 import { useQuotes } from "@/context/QuotesContext";
 import { useToast } from "@/context/ToastContext";
 import type { Quote } from "@/lib/types";
@@ -33,20 +33,33 @@ export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, feat
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: animationDelay }}
       className={cn(
-        "relative overflow-hidden rounded-[12px] border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6",
-        featured && "border-[rgba(0,212,170,0.22)]"
+        "group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 transition-all duration-300 hover:border-[var(--color-border-hover)]",
+        featured && "border-[rgba(212,165,74,0.18)]"
       )}
     >
-      <p className="mb-5 text-lg font-medium leading-relaxed text-[var(--color-text-primary)] sm:text-xl">“{quote.content}”</p>
+      {featured && (
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-accent-primary)] to-transparent opacity-25" />
+      )}
+
+      <p className="quote-text mb-5 text-lg leading-relaxed text-[var(--color-text-primary)] sm:text-xl">
+        &ldquo;{quote.content}&rdquo;
+      </p>
 
       <div className="flex items-center justify-between gap-4">
-        <Link href={`/author/${quote.authorSlug}`} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+        <Link
+          href={`/author/${quote.authorSlug}`}
+          className="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent-primary)]"
+        >
           {quote.author}
         </Link>
 
-        <div className="flex items-center gap-2">
-          <button onClick={copyQuote} aria-label="copy quote" className="rounded-md border border-[var(--color-border)] bg-transparent p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
-            <Copy className="h-4 w-4" />
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={copyQuote}
+            aria-label="copy quote"
+            className="icon-btn"
+          >
+            <Copy className="h-3.5 w-3.5" />
           </button>
           <ShareButton quote={quote} />
           <LikeButton
@@ -59,13 +72,13 @@ export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, feat
       </div>
 
       {showFullMeta && quote.tags.length > 0 && (
-        <div className="mt-5 flex flex-col gap-2 border-t border-[var(--color-border)] pt-4 text-sm text-[var(--color-text-muted)] sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-3">
+        <div className="mt-5 border-t border-[var(--color-border)] pt-4">
+          <div className="flex flex-wrap items-center gap-2">
             {quote.tags.slice(0, 4).map((tag) => (
-              <span key={tag}>{tag}</span>
+              <span key={tag} className="tag-chip">{tag}</span>
             ))}
+            <span className="ml-auto text-xs text-[var(--color-text-muted)]">{quote.length} chars</span>
           </div>
-          <span>{quote.length} characters</span>
         </div>
       )}
     </motion.article>
