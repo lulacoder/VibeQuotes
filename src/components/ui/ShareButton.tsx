@@ -101,7 +101,7 @@ export function ShareButton({ quote }: ShareButtonProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[rgba(212,165,74,0.06)] hover:text-[var(--color-text-primary)]"
+                      className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
                     >
                       <Icon className="h-3.5 w-3.5" />
                       {link.name}
@@ -116,7 +116,7 @@ export function ShareButton({ quote }: ShareButtonProps) {
                   className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors ${
                     copied
                       ? "text-[var(--color-accent-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:bg-[rgba(212,165,74,0.06)] hover:text-[var(--color-text-primary)]"
+                      : "text-[var(--color-text-secondary)] hover:bg-[color-mix(in_srgb,var(--color-accent-primary)_6%,transparent)] hover:text-[var(--color-text-primary)]"
                   }`}
                 >
                   {copied ? <Check className="h-3.5 w-3.5" /> : <LinkSimple className="h-3.5 w-3.5" />}

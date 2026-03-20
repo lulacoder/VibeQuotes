@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Heart, ArrowClockwise, Sparkle } from '@phosphor-icons/react';
+import { Heart, ArrowClockwise, Sparkle, Copy } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
+import { useToast } from '@/context/ToastContext';
 
 interface QuoteDisplayProps {
   content: string;
@@ -28,24 +29,33 @@ export function QuoteDisplay({
   isRefreshing,
   className,
 }: QuoteDisplayProps) {
+  const { addToast } = useToast();
+
+  const copyQuote = async () => {
+    await navigator.clipboard.writeText(`"${content}" — ${author}`);
+    addToast('Copied to clipboard', 'success');
+  };
+
   return (
     <motion.figure
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-7 sm:p-10 transition-colors duration-300',
+        'relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border-hard)] bg-[var(--color-bg-secondary)] transition-colors duration-300',
         className
       )}
     >
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-accent-primary)] to-transparent opacity-20" />
+      {/* Teal top accent */}
+      <div className="h-[2px] bg-[var(--color-accent-primary)]" />
 
-      <div className="relative z-10">
-        <div className="mb-8 flex items-start justify-between gap-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1.5 text-xs text-[var(--color-text-muted)]">
-            <Sparkle weight="duotone" className="h-3 w-3 text-[var(--color-accent-primary)]" />
-            Featured
-          </div>
+      <div className="flex flex-1 flex-col p-7 sm:p-10">
+        {/* Header row */}
+        <div className="mb-8 flex items-center justify-between gap-3">
+          <span className="section-eyebrow flex items-center gap-1.5">
+            <Sparkle weight="fill" className="h-3 w-3" />
+            Daily pick
+          </span>
           {onRefresh && (
             <button
               onClick={onRefresh}
@@ -53,32 +63,42 @@ export function QuoteDisplay({
               className="icon-btn gap-1.5 px-3 text-xs"
             >
               <ArrowClockwise className={cn('h-3.5 w-3.5', isRefreshing && 'animate-spin')} />
-              New
+              <span className="font-body text-xs">New</span>
             </button>
           )}
         </div>
 
-        <blockquote className="quote-text max-w-3xl text-[clamp(1.75rem,3.8vw,3.5rem)] leading-[1.08] text-[var(--color-text-primary)]">
+        {/* Quote */}
+        <blockquote className="quote-text flex-1 text-[clamp(1.6rem,3.5vw,3rem)] leading-tight text-[var(--color-text-primary)]">
           &ldquo;{content}&rdquo;
         </blockquote>
 
-        <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        {/* Author + actions row */}
+        <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
           <Link
             href={`/author/${authorSlug}`}
-            className="group inline-flex items-center gap-3 text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+            className="group flex items-center gap-2.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent-primary)]"
           >
-            <span className="h-px w-6 bg-[var(--color-accent-primary)] transition-all duration-300 group-hover:w-10" />
+            <span className="h-px w-5 bg-[var(--color-accent-primary)] transition-all duration-300 group-hover:w-8" />
             <span className="font-medium">{author}</span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          {/* Action cluster */}
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              onClick={copyQuote}
+              aria-label="Copy quote"
+              className="icon-btn"
+            >
+              <Copy className="h-4 w-4" />
+            </button>
             <button
               onClick={() => onReaction?.(reaction === 'liked' ? 'disliked' : 'liked')}
               aria-label={reaction === 'liked' ? 'Remove like' : 'Like quote'}
               className={cn(
-                'icon-btn h-10 w-10',
+                'icon-btn',
                 reaction === 'liked' &&
-                  'border-[rgba(212,107,107,0.3)] bg-[rgba(212,107,107,0.08)] text-[var(--color-accent-tertiary)]'
+                  'border-[color-mix(in_srgb,var(--color-accent-warm)_35%,transparent)] bg-[color-mix(in_srgb,var(--color-accent-warm)_10%,transparent)] text-[var(--color-accent-warm)]'
               )}
             >
               <Heart weight={reaction === 'liked' ? 'fill' : 'regular'} className="h-4 w-4" />
@@ -86,11 +106,14 @@ export function QuoteDisplay({
           </div>
         </div>
 
+        {/* Tags */}
         {tags.length > 0 && (
-          <div className="mt-8 border-t border-[var(--color-border)] pt-5">
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-6 border-t border-[var(--color-border-hard)] pt-4">
+            <div className="flex flex-wrap gap-1.5">
               {tags.slice(0, 5).map((tag) => (
-                <span key={tag} className="tag-chip">{tag}</span>
+                <span key={tag} className="tag-chip">
+                  {tag}
+                </span>
               ))}
             </div>
           </div>

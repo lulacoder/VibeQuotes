@@ -77,7 +77,7 @@ export function KeyboardShortcuts() {
 
 function Shortcut({ rowIcon: Icon, label, keys }: { rowIcon: React.ElementType; label: string; keys: string[] }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] px-4 py-3">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-text-primary)_2%,transparent)] px-4 py-3">
       <Icon className="h-4 w-4 text-[var(--color-accent-primary)]" />
       <span className="flex-1">{label}</span>
       <div className="flex gap-1">

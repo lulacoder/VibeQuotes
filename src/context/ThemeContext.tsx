@@ -7,7 +7,6 @@ type Theme = "light" | "dark" | "system";
 interface ThemeContextType {
   theme: Theme;
   resolvedTheme: "light" | "dark";
-  toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
 }
 
@@ -15,86 +14,78 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = "vibequotes-theme";
 
+function getSystemTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function applyTheme(resolved: "light" | "dark") {
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(resolved);
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
 
-  // Get system preference
-  const getSystemTheme = useCallback((): "light" | "dark" => {
-    if (typeof window === "undefined") return "light";
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Resolve theme to concrete value
+  const resolve = useCallback((t: Theme): "light" | "dark" => {
+    if (t === "system") return getSystemTheme();
+    return t;
   }, []);
 
-  // Initialize theme on mount only
+  // On mount: read saved preference and apply immediately
   useEffect(() => {
-    setMounted(true);
-
+    let saved: Theme = "system";
     try {
-      const savedTheme = localStorage.getItem(STORAGE_KEY) as Theme | null;
-      if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
-        setThemeState(savedTheme);
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw === "light" || raw === "dark" || raw === "system") {
+        saved = raw;
       }
-    } catch {
-      // Ignore localStorage errors
-    }
-  }, []);
+    } catch {}
 
-  // Listen for system theme changes
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+    const resolved = resolve(saved);
+    setThemeState(saved);
+    setResolvedTheme(resolved);
+    applyTheme(resolved);
+    setMounted(true);
+  }, [resolve]);
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = () => {
-      if (theme === "system") {
-        const newResolved = getSystemTheme();
-        setResolvedTheme(newResolved);
-        document.documentElement.classList.remove("light", "dark");
-        document.documentElement.classList.add(newResolved);
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [theme, getSystemTheme]);
-
-  // Update document classes when theme changes
+  // When theme state changes (after mount), apply and persist
   useEffect(() => {
     if (!mounted) return;
-
-    const resolved = theme === "system" ? getSystemTheme() : theme;
+    const resolved = resolve(theme);
     setResolvedTheme(resolved);
-
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(resolved);
-
+    applyTheme(resolved);
     try {
       localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      // Ignore localStorage errors
-    }
-  }, [theme, mounted, getSystemTheme]);
+    } catch {}
+  }, [theme, mounted, resolve]);
 
-  const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      if (prev === "light") return "dark";
-      if (prev === "dark") return "system";
-      return "light";
-    });
+  // Listen for system preference changes
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => {
+      if (theme === "system") {
+        const resolved = resolve("system");
+        setResolvedTheme(resolved);
+        applyTheme(resolved);
+      }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [theme, resolve]);
+
+  const setTheme = useCallback((t: Theme) => {
+    setThemeState(t);
   }, []);
 
-  const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme);
-  }, []);
-
-  // Always provide context, but hide content until mounted to prevent flash
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, toggleTheme, setTheme }}>
-      {mounted ? children : (
-        <div style={{ visibility: "hidden" }}>
-          {children}
-        </div>
-      )}
+    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
+      {children}
     </ThemeContext.Provider>
   );
 }

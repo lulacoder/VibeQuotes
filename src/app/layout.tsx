@@ -33,6 +33,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('vibequotes-theme');
+                  var r = document.documentElement;
+                  r.classList.remove('light','dark');
+                  if (t === 'light' || t === 'dark') {
+                    r.classList.add(t);
+                  } else {
+                    r.classList.add(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  }
+                } catch(e) {
+                  document.documentElement.classList.add('light');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] antialiased">
         <ThemeProvider>
           <QueryProvider>

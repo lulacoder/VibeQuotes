@@ -9,20 +9,27 @@ export function QuoteCardSkeleton() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-7 sm:p-10"
+      className="flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border-hard)] bg-[var(--color-bg-secondary)]"
     >
-      <div className="space-y-3 mb-8 mt-4 relative z-10">
-        <div className="shimmer h-6 w-full rounded-lg" />
-        <div className="shimmer h-6 w-11/12 rounded-lg" />
-        <div className="shimmer h-6 w-4/5 rounded-lg" />
-      </div>
+      {/* Fake teal top bar */}
+      <div className="h-[2px] w-full shimmer" />
 
-      <div className="flex items-center justify-between">
-        <div className="shimmer h-4 w-32 rounded-lg" />
-        <div className="flex gap-2">
-          <div className="shimmer h-9 w-9 rounded-lg" />
-          <div className="shimmer h-9 w-9 rounded-lg" />
-          <div className="shimmer h-9 w-9 rounded-lg" />
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        {/* Quote lines */}
+        <div className="flex-1 space-y-2.5">
+          <div className="shimmer h-5 w-full rounded-lg" />
+          <div className="shimmer h-5 w-10/12 rounded-lg" />
+          <div className="shimmer h-5 w-3/4 rounded-lg" />
+        </div>
+
+        {/* Author + buttons row */}
+        <div className="flex items-center justify-between gap-3 pt-2">
+          <div className="shimmer h-4 w-28 rounded-lg" />
+          <div className="flex gap-1.5">
+            <div className="shimmer h-9 w-9 rounded-lg" />
+            <div className="shimmer h-9 w-9 rounded-lg" />
+            <div className="shimmer h-9 w-9 rounded-lg" />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -31,13 +38,13 @@ export function QuoteCardSkeleton() {
 
 export function QuoteListSkeleton({ count = 3 }: { count?: number }) {
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.08 }}
+          transition={{ delay: i * 0.07 }}
         >
           <QuoteCardSkeleton />
         </motion.div>
@@ -51,9 +58,9 @@ export function AuthorCardSkeleton() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6"
+      className="rounded-2xl border border-[var(--color-border-hard)] bg-[var(--color-bg-secondary)] p-6"
     >
-      <div className="flex items-center gap-4 mb-5">
+      <div className="mb-5 flex items-center gap-4">
         <div className="shimmer h-12 w-12 rounded-xl" />
         <div className="flex-1 space-y-2">
           <div className="shimmer h-5 w-1/2 rounded-lg" />

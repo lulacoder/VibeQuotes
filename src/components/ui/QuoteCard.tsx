@@ -17,7 +17,12 @@ interface QuoteCardProps {
   featured?: boolean;
 }
 
-export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, featured = false }: QuoteCardProps) {
+export function QuoteCard({
+  quote,
+  showFullMeta = true,
+  animationDelay = 0,
+  featured = false,
+}: QuoteCardProps) {
   const { addLike, addDislike, getReaction } = useQuotes();
   const { addToast } = useToast();
   const reaction = getReaction(quote._id);
@@ -33,54 +38,68 @@ export function QuoteCard({ quote, showFullMeta = true, animationDelay = 0, feat
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: animationDelay }}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 transition-all duration-300 hover:border-[var(--color-border-hover)]",
-        featured && "border-[rgba(212,165,74,0.18)]"
+        "group relative flex flex-col overflow-hidden rounded-2xl border bg-[var(--color-bg-secondary)] transition-all duration-300 card-hover",
+        featured
+          ? "border-[color-mix(in_srgb,var(--color-accent-primary)_30%,transparent)]"
+          : "border-[var(--color-border-hard)]"
       )}
     >
+      {/* Teal top rule on featured */}
       {featured && (
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-accent-primary)] to-transparent opacity-25" />
+        <div className="h-[2px] w-full bg-[var(--color-accent-primary)]" />
       )}
 
-      <p className="quote-text mb-5 text-lg leading-relaxed text-[var(--color-text-primary)] sm:text-xl">
-        &ldquo;{quote.content}&rdquo;
-      </p>
+      <div className="flex flex-1 flex-col p-6">
+        {/* Quote content */}
+        <p className="quote-text mb-5 flex-1 text-[1.1rem] leading-snug text-[var(--color-text-primary)] sm:text-[1.2rem]">
+          &ldquo;{quote.content}&rdquo;
+        </p>
 
-      <div className="flex items-center justify-between gap-4">
-        <Link
-          href={`/author/${quote.authorSlug}`}
-          className="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent-primary)]"
-        >
-          {quote.author}
-        </Link>
-
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={copyQuote}
-            aria-label="copy quote"
-            className="icon-btn"
+        {/* Author row + actions */}
+        <div className="flex items-center justify-between gap-3 pt-2">
+          <Link
+            href={`/author/${quote.authorSlug}`}
+            className="group/author flex items-center gap-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent-primary)]"
           >
-            <Copy className="h-3.5 w-3.5" />
-          </button>
-          <ShareButton quote={quote} />
-          <LikeButton
-            isLiked={reaction?.type === "liked"}
-            isDisliked={reaction?.type === "disliked"}
-            onLike={() => addLike(quote)}
-            onDislike={() => addDislike(quote)}
-          />
-        </div>
-      </div>
+            <span className="h-px w-4 bg-[var(--color-accent-primary)] opacity-60 transition-all duration-300 group-hover/author:w-6 group-hover/author:opacity-100" />
+            <span className="font-medium">{quote.author}</span>
+          </Link>
 
-      {showFullMeta && quote.tags.length > 0 && (
-        <div className="mt-5 border-t border-[var(--color-border)] pt-4">
-          <div className="flex flex-wrap items-center gap-2">
-            {quote.tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="tag-chip">{tag}</span>
-            ))}
-            <span className="ml-auto text-xs text-[var(--color-text-muted)]">{quote.length} chars</span>
+          {/* Action buttons — always visible, never overflow */}
+          <div className="flex shrink-0 items-center gap-1.5">
+            <button
+              onClick={copyQuote}
+              aria-label="Copy quote"
+              className="icon-btn"
+            >
+              <Copy className="h-3.5 w-3.5" />
+            </button>
+            <ShareButton quote={quote} />
+            <LikeButton
+              isLiked={reaction?.type === "liked"}
+              isDisliked={reaction?.type === "disliked"}
+              onLike={() => addLike(quote)}
+              onDislike={() => addDislike(quote)}
+            />
           </div>
         </div>
-      )}
+
+        {/* Tags row */}
+        {showFullMeta && quote.tags.length > 0 && (
+          <div className="mt-4 border-t border-[var(--color-border-hard)] pt-3.5">
+            <div className="flex flex-wrap items-center gap-1.5">
+              {quote.tags.slice(0, 4).map((tag) => (
+                <span key={tag} className="tag-chip">
+                  {tag}
+                </span>
+              ))}
+              <span className="ml-auto font-mono text-[10px] text-[var(--color-text-muted)]">
+                {quote.length}c
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
     </motion.article>
   );
 }

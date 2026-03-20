@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { MagnifyingGlass, X, Sparkle, ArrowRight } from "@phosphor-icons/react";
+import { MagnifyingGlass, X, ArrowRight } from "@phosphor-icons/react";
 
 interface SearchBarProps {
   placeholder?: string;
@@ -13,14 +13,8 @@ interface SearchBarProps {
 }
 
 const SEARCH_SUGGESTIONS = [
-  "love",
-  "wisdom",
-  "success",
-  "happiness",
-  "life",
-  "courage",
-  "dreams",
-  "freedom",
+  "love", "wisdom", "success", "happiness",
+  "life", "courage", "dreams", "freedom",
 ];
 
 export function SearchBar({
@@ -48,17 +42,13 @@ export function SearchBar({
         setShowSuggestions(false);
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const debouncedSearch = useCallback(
     (value: string) => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-
+      if (debounceRef.current) clearTimeout(debounceRef.current);
       debounceRef.current = setTimeout(() => {
         onSearch?.(value);
         const params = new URLSearchParams(searchParams.toString());
@@ -89,36 +79,32 @@ export function SearchBar({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     const params = new URLSearchParams();
-    if (query.trim()) {
-      params.set("q", query.trim());
-    }
+    if (query.trim()) params.set("q", query.trim());
     onSearch?.(query);
     router.push(`/search?${params.toString()}`);
     setShowSuggestions(false);
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    router.push(`/search?q=${suggestion}`);
+  const handleSuggestionClick = (s: string) => {
+    setQuery(s);
+    router.push(`/search?q=${s}`);
     setShowSuggestions(false);
     inputRef.current?.blur();
   };
 
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
-      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="relative">
+      <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} className="relative">
         <div
-          className={`relative rounded-xl border bg-[var(--color-bg-primary)] transition-all duration-300 ${
+          className={`relative flex items-center rounded-xl border bg-[var(--color-bg-primary)] transition-all duration-200 ${
             isFocused
-              ? "border-[var(--color-border-hover)] shadow-[0_0_0_3px_rgba(212,165,74,0.06)]"
-              : "border-[var(--color-border)]"
+              ? "border-[var(--color-accent-primary)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-accent-primary)_12%,transparent)]"
+              : "border-[var(--color-border-hard)]"
           }`}
         >
-          <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
+          <div className="pointer-events-none pl-4">
             <MagnifyingGlass
               weight={isFocused ? "bold" : "regular"}
               className={`h-[18px] w-[18px] transition-colors duration-200 ${
@@ -132,20 +118,14 @@ export function SearchBar({
             type="text"
             value={query}
             onChange={handleChange}
-            onFocus={() => {
-              setIsFocused(true);
-              setShowSuggestions(true);
-            }}
-            onBlur={() => {
-              setIsFocused(false);
-              setTimeout(() => setShowSuggestions(false), 200);
-            }}
+            onFocus={() => { setIsFocused(true); setShowSuggestions(true); }}
+            onBlur={() => { setIsFocused(false); setTimeout(() => setShowSuggestions(false), 200); }}
             placeholder={placeholder}
             autoFocus={autoFocus}
-            className="input-field pl-11 pr-20 text-sm"
+            className="flex-1 bg-transparent py-3.5 pl-3 pr-2 font-body text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-muted)]"
           />
 
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 pr-3">
             <AnimatePresence>
               {query && (
                 <motion.button
@@ -154,44 +134,39 @@ export function SearchBar({
                   exit={{ opacity: 0, scale: 0.8 }}
                   type="button"
                   onClick={handleClear}
-                  className="rounded-md p-1.5 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
+                  className="flex h-6 w-6 items-center justify-center rounded-full text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]"
                 >
                   <X className="h-3.5 w-3.5" />
                 </motion.button>
               )}
             </AnimatePresence>
-
-            {!query && !isFocused && (
-              <kbd>/</kbd>
-            )}
+            {!query && !isFocused && <kbd>/</kbd>}
           </div>
         </div>
 
+        {/* Suggestions dropdown */}
         <AnimatePresence>
           {showSuggestions && !query && (
             <motion.div
               initial={{ opacity: 0, y: -6, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 z-50 mt-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-4 shadow-xl"
+              transition={{ duration: 0.18 }}
+              className="absolute left-0 right-0 top-full z-50 mt-1.5 rounded-xl border border-[var(--color-border-hard)] bg-[var(--color-bg-elevated)] p-4 shadow-xl"
             >
-              <p className="mb-3 flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                <Sparkle weight="duotone" className="h-3 w-3 text-[var(--color-accent-primary)]" />
-                Popular
-              </p>
+              <p className="section-eyebrow mb-3">Popular</p>
               <div className="flex flex-wrap gap-1.5">
-                {SEARCH_SUGGESTIONS.map((suggestion, index) => (
+                {SEARCH_SUGGESTIONS.map((s, i) => (
                   <motion.button
-                    key={suggestion}
+                    key={s}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.025 }}
+                    transition={{ delay: i * 0.025 }}
                     type="button"
-                    onClick={() => handleSuggestionClick(suggestion)}
+                    onClick={() => handleSuggestionClick(s)}
                     className="pill gap-1"
                   >
-                    {suggestion}
+                    {s}
                     <ArrowRight className="h-3 w-3" />
                   </motion.button>
                 ))}
@@ -201,14 +176,9 @@ export function SearchBar({
         </AnimatePresence>
       </motion.div>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-2.5 text-center text-xs text-[var(--color-text-muted)]"
-      >
+      <p className="mt-2 text-center font-mono text-xs text-[var(--color-text-muted)]">
         <kbd>/</kbd> to focus &middot; <kbd>Esc</kbd> to close
-      </motion.p>
+      </p>
     </form>
   );
 }
