@@ -86,13 +86,18 @@ A quote can be liked AND in a collection, or in a collection without liking it. 
 
 **Edit Flow:**
 - "Edit" button opens inline form with name, description, color fields
-- Calls `renameCollection()` and updates color/description
+- Requires extending `CollectionsContext` with an `updateCollection()` method (or extending `renameCollection()` to accept `description` and `color` fields). Currently the context only supports renaming — a new action `UPDATE_COLLECTION` is needed.
 
 **Delete Flow:**
 - "Delete" button with confirmation dialog
 - Calls `deleteCollection()`, navigates to `/collections`
 
-**Data Source:** `useCollections()` — find collection by ID, resolve quoteIds against local quote data
+**Data Source:** `useCollections()` — find collection by ID from context state. Resolve `quoteIds` against the local quote library (`src/data/quote-library.json` and `src/data/modern-quotes.ts`). Use the existing `getQuoteById()` or equivalent utility from `src/lib/api/quotes.ts` to fetch full quote objects. If a quote ID is not found in the local library (e.g., it was from a Quotable API response that's no longer cached), show a fallback card with just the quote ID and a "Quote unavailable" message.
+
+**Error Handling:**
+- Invalid collection ID in URL: redirect to `/collections` or show "Collection not found" page
+- Empty collection: show a "No quotes yet" empty state with a link to browse the archive
+- localStorage full or unavailable: catch errors in context, show a non-blocking toast notification
 
 ---
 
@@ -131,7 +136,7 @@ Triggered by a new **+** button on `QuoteCard`. Modal/dropdown overlay.
 Add a new **+** action button between existing actions:
 - 32px rounded button with blue accent styling (gradient fill, thicker border, glow shadow)
 - Opens `CollectionPicker` modal on click
-- Visual indicator if quote is in any collection (optional: small badge)
+- Out of scope for v1: visual badge on the card indicating collection membership. The picker itself shows membership state.
 
 ### Updated `Header`
 
@@ -180,6 +185,36 @@ Based on approved mockups:
 
 ---
 
+## Edge Cases
+
+| Case | Handling |
+|------|----------|
+| Invalid collection ID in URL | Redirect to `/collections` with a toast: "Collection not found" |
+| Collection detail page with 0 quotes | Show "No quotes yet" empty state with link to `/search` |
+| Duplicate collection names | Allowed — collections are distinguished by ID, not name |
+| localStorage quota exceeded | Catch in context `useEffect`, show toast: "Storage full — delete a collection to free space" |
+| Quote ID not found in local data | Show fallback card: "Quote unavailable" with the ID, plus a "Remove" button |
+| Renaming to empty string | Prevent in UI — disable submit if name is empty |
+| Deleting a collection while on its detail page | Redirect to `/collections` after delete |
+
+---
+
+## Context API Changes
+
+The existing `CollectionsContext` needs one new method for the edit flow:
+
+```typescript
+// New action
+| { type: "UPDATE_COLLECTION"; payload: { id: string; name: string; description?: string; color?: string } }
+
+// New method in CollectionsContextType
+updateCollection: (id: string, name: string, description?: string, color?: string) => void;
+```
+
+This replaces the need to call `renameCollection()` separately. The existing `renameCollection` method can be kept for backwards compatibility or removed if nothing else uses it.
+
+---
+
 ## File Changes Summary
 
 | File | Action |
@@ -189,7 +224,7 @@ Based on approved mockups:
 | `src/components/ui/CollectionPicker.tsx` | **Create** — modal picker component |
 | `src/components/ui/QuoteCard.tsx` | **Modify** — add + button and picker integration |
 | `src/components/layout/Header.tsx` | **Modify** — add Collections nav link |
-| `src/context/CollectionsContext.tsx` | **No change** — data layer already complete |
+| `src/context/CollectionsContext.tsx` | **Modify** — add `updateCollection` method and `UPDATE_COLLECTION` action |
 
 ---
 
@@ -198,11 +233,13 @@ Based on approved mockups:
 1. User can navigate to `/collections` from the header
 2. User can create a new collection with name, description, and color
 3. User can click a collection card to view its quotes
-4. User can edit (rename, change color) and delete a collection
+4. User can edit (rename, change color/description) and delete a collection
 5. User can remove quotes from a collection
 6. User can click the + button on any quote card to open the collection picker
 7. User can add a quote to a collection from the picker
 8. User can create a new collection inline from the picker
-9. The picker shows which collections a quote already belongs to
+9. The picker shows which collections a quote already belongs to (checkmark toggle)
 10. All collection data persists in localStorage and survives page reloads
 11. Collections are independent of likes — adding to a collection does not like the quote
+12. Navigating to an invalid collection ID shows a "not found" state, not a crash
+13. Empty collection detail page shows a helpful empty state with link to browse quotes
