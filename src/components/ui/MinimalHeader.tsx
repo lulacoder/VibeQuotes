@@ -4,15 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils/cn';
-import { Compass, MagnifyingGlass, Heart } from '@phosphor-icons/react';
+import { Compass, MagnifyingGlass, Heart, Folders } from '@phosphor-icons/react';
 import { ThemeToggle } from './ThemeToggle';
 import { useQuotes } from '@/context/QuotesContext';
 import { useState } from 'react';
 
 const navLinks = [
-  { href: '/',       label: 'Home',    icon: Compass },
-  { href: '/search', label: 'Archive', icon: MagnifyingGlass },
-  { href: '/likes',  label: 'Saved',   icon: Heart },
+  { href: '/',            label: 'Home',       icon: Compass },
+  { href: '/search',      label: 'Archive',    icon: MagnifyingGlass },
+  { href: '/collections', label: 'Collections', icon: Folders },
+  { href: '/likes',       label: 'Saved',      icon: Heart },
 ];
 
 export function MinimalHeader() {

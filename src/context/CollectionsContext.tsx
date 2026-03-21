@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useReducer, useEffect, useCallback, useRef } from "react";
+import { useToast } from "@/context/ToastContext";
 
 export interface Collection {
   id: string;
@@ -21,6 +22,7 @@ type CollectionsAction =
   | { type: "CREATE_COLLECTION"; payload: { name: string; description?: string; color?: string } }
   | { type: "DELETE_COLLECTION"; payload: { id: string } }
   | { type: "RENAME_COLLECTION"; payload: { id: string; name: string } }
+  | { type: "UPDATE_COLLECTION"; payload: { id: string; name: string; description?: string; color?: string } }
   | { type: "ADD_TO_COLLECTION"; payload: { collectionId: string; quoteId: string } }
   | { type: "REMOVE_FROM_COLLECTION"; payload: { collectionId: string; quoteId: string } }
   | { type: "HYDRATE"; payload: Record<string, Collection> };
@@ -74,6 +76,23 @@ function collectionsReducer(state: CollectionsState, action: CollectionsAction):
         },
       };
     }
+    case "UPDATE_COLLECTION": {
+      const col = state.collections[action.payload.id];
+      if (!col) return state;
+      return {
+        ...state,
+        collections: {
+          ...state.collections,
+          [action.payload.id]: {
+            ...col,
+            name: action.payload.name,
+            description: action.payload.description ?? col.description,
+            color: action.payload.color ?? col.color,
+            updatedAt: Date.now(),
+          },
+        },
+      };
+    }
     case "ADD_TO_COLLECTION": {
       const col = state.collections[action.payload.collectionId];
       if (!col) return state;
@@ -118,6 +137,7 @@ interface CollectionsContextType {
   createCollection: (name: string, description?: string, color?: string) => void;
   deleteCollection: (id: string) => void;
   renameCollection: (id: string, name: string) => void;
+  updateCollection: (id: string, name: string, description?: string, color?: string) => void;
   addToCollection: (collectionId: string, quoteId: string) => void;
   removeFromCollection: (collectionId: string, quoteId: string) => void;
   getCollectionsForQuote: (quoteId: string) => Collection[];
@@ -128,6 +148,8 @@ const CollectionsContext = createContext<CollectionsContextType | undefined>(und
 
 export function CollectionsProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(collectionsReducer, { collections: {}, hydrated: false });
+  const { addToast } = useToast();
+  const storageErrorShown = useRef(false);
 
   useEffect(() => {
     try {
@@ -147,9 +169,14 @@ export function CollectionsProvider({ children }: { children: React.ReactNode })
     if (state.hydrated) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.collections));
-      } catch {}
+      } catch {
+        if (!storageErrorShown.current) {
+          addToast("Storage full — delete a collection to free space", "error");
+          storageErrorShown.current = true;
+        }
+      }
     }
-  }, [state.collections, state.hydrated]);
+  }, [state.collections, state.hydrated, addToast]);
 
   const createCollection = useCallback((name: string, description?: string, color?: string) => {
     dispatch({ type: "CREATE_COLLECTION", payload: { name, description, color } });
@@ -161,6 +188,10 @@ export function CollectionsProvider({ children }: { children: React.ReactNode })
 
   const renameCollection = useCallback((id: string, name: string) => {
     dispatch({ type: "RENAME_COLLECTION", payload: { id, name } });
+  }, []);
+
+  const updateCollection = useCallback((id: string, name: string, description?: string, color?: string) => {
+    dispatch({ type: "UPDATE_COLLECTION", payload: { id, name, description, color } });
   }, []);
 
   const addToCollection = useCallback((collectionId: string, quoteId: string) => {
@@ -181,6 +212,7 @@ export function CollectionsProvider({ children }: { children: React.ReactNode })
     createCollection,
     deleteCollection,
     renameCollection,
+    updateCollection,
     addToCollection,
     removeFromCollection,
     getCollectionsForQuote,

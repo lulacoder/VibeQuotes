@@ -77,6 +77,10 @@ function getAllQuotes(): Quote[] {
   ];
 }
 
+export function getQuoteById(id: string): Quote | undefined {
+  return getAllQuotes().find((quote) => quote._id === id);
+}
+
 function shuffle<T>(items: T[]): T[] {
   return [...items].sort(() => Math.random() - 0.5);
 }

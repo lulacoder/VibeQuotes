@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Copy } from "@phosphor-icons/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Copy, Plus } from "@phosphor-icons/react";
 import { useQuotes } from "@/context/QuotesContext";
 import { useToast } from "@/context/ToastContext";
 import type { Quote } from "@/lib/types";
 import { cn } from "@/lib/utils/cn";
 import { ShareButton } from "./ShareButton";
 import { LikeButton } from "./LikeButton";
+import { CollectionPicker } from "./CollectionPicker";
 
 interface QuoteCardProps {
   quote: Quote;
@@ -26,6 +28,7 @@ export function QuoteCard({
   const { addLike, addDislike, getReaction } = useQuotes();
   const { addToast } = useToast();
   const reaction = getReaction(quote._id);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const copyQuote = async () => {
     await navigator.clipboard.writeText(`"${quote.content}" — ${quote.author}`);
@@ -75,6 +78,20 @@ export function QuoteCard({
               <Copy className="h-3.5 w-3.5" />
             </button>
             <ShareButton quote={quote} />
+            <button
+              onClick={() => setPickerOpen(true)}
+              aria-label="Add to collection"
+              className="icon-btn"
+              style={{
+                background: "linear-gradient(135deg, rgba(14,165,233,0.2), rgba(14,165,233,0.05))",
+                borderColor: "rgba(14,165,233,0.5)",
+                borderWidth: "2px",
+                boxShadow: "0 2px 12px rgba(14,165,233,0.2)",
+                color: "#38bdf8",
+              }}
+            >
+              <Plus className="h-3.5 w-3.5" weight="bold" />
+            </button>
             <LikeButton
               isLiked={reaction?.type === "liked"}
               isDisliked={reaction?.type === "disliked"}
@@ -100,6 +117,15 @@ export function QuoteCard({
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {pickerOpen && (
+          <CollectionPicker
+            quoteId={quote._id}
+            onClose={() => setPickerOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.article>
   );
 }
