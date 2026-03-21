@@ -108,7 +108,7 @@ updateCollection,
 
 The existing `useEffect` that syncs to localStorage (line 146) silently catches errors. Modify it to surface a toast when storage is full:
 
-1. Import `useToast` from `@/context/ToastContext` (note: `CollectionsProvider` is already a child of `ToastProvider` in the layout, so this context is available)
+1. Import `useToast` from `@/context/ToastContext` (note: `CollectionsProvider` is already a child of `ToastProvider` in the layout, so this context is available). Also add `useRef` to the React imports on line 3 of `CollectionsContext.tsx` (currently `import React, { createContext, useContext, useReducer, useEffect, useCallback }` — add `useRef`).
 2. Inside the `CollectionsProvider` component, destructure `addToast` from `useToast()`
 3. Change the empty catch to:
 ```typescript
@@ -260,7 +260,7 @@ git commit -m "feat: add /collections index page with create flow"
 Create `src/app/collections/[id]/page.tsx` with:
 
 1. `"use client"` directive
-2. Import `useParams` from `next/navigation`, `useCollections`, `getQuoteById` from `@/lib/api/quotes`
+2. Import `useParams`, `useRouter` from `next/navigation`, `useCollections`, `getQuoteById` from `@/lib/api/quotes`
 3. Import `motion`, `AnimatePresence` from framer-motion, `Link` from next/link
 4. Import `useToast` for error notifications
 5. Import icons: `ArrowLeft`, `PencilSimple`, `Trash`, `BookOpenText`, `WarningCircle`
@@ -282,7 +282,7 @@ Page structure:
   - Save calls `updateCollection(id, name, description, color)`
   - Cancel hides the form
 
-**Note on file size:** This page has ~4-5 responsibilities (quote list, edit form, delete flow, not-found handling, empty state). If it exceeds 300 lines, extract `EditCollectionForm` and `CollectionQuoteItem` into separate components under `src/components/ui/`. For now, inline is fine — split only if the file grows large.
+**Note on file size:** This page has ~4-5 responsibilities (quote list, edit form, delete flow, not-found handling, empty state). If it exceeds 250 lines, proactively extract `EditCollectionForm` and `CollectionQuoteItem` into separate components under `src/components/ui/`. Don't wait until 300 — split early.
 
 Quote card styling (matching the approved mockup):
 - 16px radius, layered shadows
