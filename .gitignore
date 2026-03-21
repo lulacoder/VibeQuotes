@@ -44,3 +44,7 @@ next-env.d.ts
 .gemini/
 .agent/
 antigravity/
+
+# Worktrees and brainstorm artifacts
+.worktrees/
+.superpowers/
