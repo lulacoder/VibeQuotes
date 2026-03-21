@@ -212,6 +212,7 @@ Create `src/app/collections/page.tsx` with:
    - Overlay/backdrop
    - Form with name (required), description (optional), color picker (4 color swatches: gold, sage, ember, smoke)
    - Submit calls `createCollection(name, description, color)`, navigates to new collection
+   - **Validation:** Disable submit if name is empty (trim whitespace check)
    - Cancel closes modal
 
 Use the design tokens from `globals.css`:
@@ -281,6 +282,7 @@ Page structure:
   - Name input, description input, color swatches
   - Save calls `updateCollection(id, name, description, color)`
   - Cancel hides the form
+  - **Validation:** Disable submit if name is empty (trim whitespace check)
 
 **Note on file size:** This page has ~4-5 responsibilities (quote list, edit form, delete flow, not-found handling, empty state). If it exceeds 250 lines, proactively extract `EditCollectionForm` and `CollectionQuoteItem` into separate components under `src/components/ui/`. Don't wait until 300 — split early.
 
