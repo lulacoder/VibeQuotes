@@ -92,7 +92,7 @@ A quote can be liked AND in a collection, or in a collection without liking it. 
 - "Delete" button with confirmation dialog
 - Calls `deleteCollection()`, navigates to `/collections`
 
-**Data Source:** `useCollections()` — find collection by ID from context state. Resolve `quoteIds` against the local quote library (`src/data/quote-library.json` and `src/data/modern-quotes.ts`). Use the existing `getQuoteById()` or equivalent utility from `src/lib/api/quotes.ts` to fetch full quote objects. If a quote ID is not found in the local library (e.g., it was from a Quotable API response that's no longer cached), show a fallback card with just the quote ID and a "Quote unavailable" message.
+**Data Source:** `useCollections()` — find collection by ID from context state. Resolve `quoteIds` against the local quote library (`src/data/quote-library.json` and `src/data/modern-quotes.ts`). Requires a new `getQuoteById(id: string): Quote | undefined` utility in `src/lib/api/quotes.ts` that searches both sources. Quote IDs stored in collections match the `Quote._id` field (which maps from the library's `id` field via `localToQuote`/`modernToQuote`). If a quote ID is not found (e.g., it was from a Quotable API response that's no longer cached), show a fallback card with just the quote ID and a "Quote unavailable" message.
 
 **Error Handling:**
 - Invalid collection ID in URL: redirect to `/collections` or show "Collection not found" page
@@ -113,14 +113,14 @@ Triggered by a new **+** button on `QuoteCard`. Modal/dropdown overlay.
 - 20px radius, massive layered shadow (`0 20px 60px`)
 - Gradient header with title and close button
 - Search/filter input with inset shadow
-- List of collections with gradient color dots (glowing box-shadow)
+- List of collections with gradient color dots (glowing box-shadow). If multiple collections share a name, disambiguate by showing the color dot + quote count (e.g., "Motivation (12)")
 - Items the quote is already in: blue highlight, checkmark in a pill
 - Items the quote is not in: plain, hover highlight
 - "Create new collection" at bottom with dashed border card
 
 **Behavior:**
 - Clicking a collection toggles the quote in/out (calls `addToCollection()` or `removeFromCollection()`)
-- "Create new" opens inline text input, creates collection and adds quote
+- "Create new" opens inline text input, creates collection and adds quote. Color auto-assigned from the `COLLECTION_COLORS` fallback (round-robin based on existing collection count), matching the current `CREATE_COLLECTION` reducer behavior. No color picker in the inline flow — users can change color later via the Edit action on the collection detail page.
 - Closes on outside click or close button
 - Search filters collection list by name
 
@@ -224,6 +224,7 @@ This replaces the need to call `renameCollection()` separately. The existing `re
 | `src/components/ui/CollectionPicker.tsx` | **Create** — modal picker component |
 | `src/components/ui/QuoteCard.tsx` | **Modify** — add + button and picker integration |
 | `src/components/layout/Header.tsx` | **Modify** — add Collections nav link |
+| `src/lib/api/quotes.ts` | **Modify** — add `getQuoteById()` utility |
 | `src/context/CollectionsContext.tsx` | **Modify** — add `updateCollection` method and `UPDATE_COLLECTION` action |
 
 ---
